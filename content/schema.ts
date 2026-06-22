@@ -1,0 +1,131 @@
+import { z } from "zod";
+
+/**
+ * Typed content contract for the homepages. EN and HE are independent SEO
+ * documents — they share this schema but populate different optional sections
+ * (EN = brand/clinic story; HE = long-form Israeli-SEO landing). Real copy lives
+ * in content/<locale>/*; generic UI strings live in messages/<locale>.json.
+ */
+
+const Cta = z.object({ label: z.string(), href: z.string() });
+
+const MediaRef = z.object({
+  kind: z.enum(["video", "stock3d", "image"]),
+  src: z.string(), // path under /media (transcoded) — placeholders allowed for now
+  poster: z.string().optional(),
+  alt: z.string(),
+});
+
+const Meta = z.object({
+  title: z.string(),
+  description: z.string(),
+  canonicalPath: z.string(), // e.g. "/" or "/he/"
+  ogImage: z.string(),
+});
+
+const Hero = z.object({
+  eyebrow: z.string().optional(),
+  h1: z.string(),
+  subhead: z.string(),
+  ctaPrimary: Cta,
+  ctaSecondary: Cta.optional(),
+  trust: z.array(z.string()).optional(), // inline trust strip items
+  media: MediaRef,
+});
+
+const PressLogo = z.object({ name: z.string(), src: z.string().optional() });
+const Credential = z.object({ title: z.string(), subtitle: z.string().optional() });
+const BeforeAfter = z.object({
+  name: z.string(),
+  location: z.string().optional(),
+  quote: z.string().optional(),
+  label: z.string().optional(), // small pill, e.g. "12-month result"
+  image: z.string(),
+  video: z.string().optional(), // AI before/after video (overrides image when set)
+});
+const ProcessStep = z.object({ step: z.number(), title: z.string(), body: z.string() });
+const Feature = z.object({ title: z.string(), body: z.string(), icon: z.string().optional() });
+const DoctorBio = z.object({
+  name: z.string(),
+  title: z.string(),
+  credentials: z.array(z.string()),
+  memberships: z.array(z.string()).optional(),
+  bio: z.string(),
+  photo: z.string().optional(),
+  videoId: z.string().optional(), // YouTube id
+});
+const TechItem = z.object({ title: z.string(), body: z.string(), image: z.string().optional() });
+const Stat = z.object({ value: z.string(), label: z.string() });
+const Included = z.object({
+  heading: z.string(),
+  body: z.string().optional(),
+  items: z.array(z.string()),
+  cta: Cta.optional(),
+});
+const Testimonial = z.object({
+  name: z.string(),
+  location: z.string().optional(),
+  quote: z.string(),
+  videoId: z.string().optional(),
+});
+const LocationInfo = z.object({
+  name: z.string(),
+  countryName: z.string(),
+  address: z.string(),
+  mapsUrl: z.string().optional(),
+});
+const FaqItem = z.object({ question: z.string(), answer: z.string() });
+
+// HE long-form helpers
+const TocItem = z.object({ id: z.string(), label: z.string() });
+const ProseSection = z.object({
+  id: z.string(),
+  heading: z.string(),
+  level: z.union([z.literal(2), z.literal(3)]).optional(),
+  paragraphs: z.array(z.string()).optional(),
+  bullets: z.array(z.string()).optional(),
+});
+const Comparison = z.object({
+  heading: z.string(),
+  columns: z.tuple([z.string(), z.string(), z.string()]), // [label, Israel, Turkey]
+  rows: z.array(z.tuple([z.string(), z.string(), z.string()])),
+  note: z.string().optional(),
+});
+const Checklist = z.object({ heading: z.string(), items: z.array(z.string()) });
+const CityGuideLink = z.object({ city: z.string(), href: z.string() });
+
+export const HomeContent = z.object({
+  meta: Meta,
+  hero: Hero,
+
+  // EN brand-story sections (optional so HE can omit them)
+  pressLogos: z.array(PressLogo).optional(),
+  credentials: z.array(Credential).optional(),
+  beforeAfter: z.array(BeforeAfter).optional(),
+  process: z.array(ProcessStep).optional(),
+  whyChoose: z.object({ heading: z.string(), features: z.array(Feature) }).optional(),
+  doctors: z
+    .object({ heading: z.string(), intro: z.string().optional(), people: z.array(DoctorBio) })
+    .optional(),
+  technology: z.object({ heading: z.string(), items: z.array(TechItem) }).optional(),
+  stats: z.object({ heading: z.string().optional(), items: z.array(Stat) }).optional(),
+  included: Included.optional(),
+  testimonials: z.object({ heading: z.string(), items: z.array(Testimonial) }).optional(),
+  locations: z.object({ heading: z.string(), items: z.array(LocationInfo) }).optional(),
+
+  // HE long-form sections (optional so EN can omit them)
+  toc: z.array(TocItem).optional(),
+  sections: z.array(ProseSection).optional(),
+  comparison: Comparison.optional(),
+  checklist: Checklist.optional(),
+  cityGuide: z.object({ heading: z.string(), items: z.array(CityGuideLink) }).optional(),
+  summary: z.object({ heading: z.string(), paragraphs: z.array(z.string()) }).optional(),
+
+  // shared
+  faq: z.object({ heading: z.string(), items: z.array(FaqItem) }).optional(),
+});
+
+export type HomeContent = z.infer<typeof HomeContent>;
+export type FaqItem = z.infer<typeof FaqItem>;
+export type Testimonial = z.infer<typeof Testimonial>;
+export type DoctorBio = z.infer<typeof DoctorBio>;

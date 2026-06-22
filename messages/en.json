@@ -1,0 +1,46 @@
+{
+  "nav": {
+    "process": "Process",
+    "doctors": "Doctors",
+    "results": "Results",
+    "locations": "Locations",
+    "technology": "Technology",
+    "faq": "FAQ",
+    "bookConsult": "Book Consultation",
+    "freeAnalysis": "Free AI Hair Analysis",
+    "switchToHebrew": "עברית"
+  },
+  "common": {
+    "readMore": "Read more",
+    "skipToContent": "Skip to content"
+  },
+  "announce": {
+    "text": "Free AI hair analysis in minutes.",
+    "linkLabel": "Start now",
+    "href": "#ai-analysis"
+  },
+  "consult": {
+    "eyebrow": "Free, no-obligation",
+    "heading": "Book your free consultation",
+    "subhead": "Share your goals with our board-certified surgeons. We'll review your case and send a personalised plan — at no cost.",
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Phone / WhatsApp",
+    "message": "Tell us about your goals (optional)",
+    "submit": "Request my consultation",
+    "orCall": "Prefer to talk? Call us",
+    "privacy": "Your details are private and never shared.",
+    "trust": "ABHRS board-certified · Rated on Trustpilot · 1,000+ patients"
+  },
+  "footer": {
+    "tagline": "American board-certified hair restoration in Greece & Israel.",
+    "explore": "Explore",
+    "ourClinics": "Our clinics",
+    "reviews": "Reviews",
+    "findUs": "Find us on",
+    "certifications": "Certifications",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "rights": "Trichogenics by Peretz Medical."
+  }
+}

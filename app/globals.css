@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Single brand family — headers AND body/subtext use this for consistency.
+       Prefers Neue Haas Unica (licensed: renders if installed locally, or once
+       its .woff2 is added at /public/fonts + an @font-face below); falls back to
+       Inter (self-hosted) everywhere else. */
+    --font-brand: "Neue Haas Unica", var(--font-inter), system-ui, sans-serif;
+  }
+
+  /* Hebrew (RTL): Heebo covers Hebrew + Latin. */
+  [dir="rtl"] {
+    --font-brand: var(--font-heebo), system-ui, sans-serif;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-sand-50 text-body text-ink-700 antialiased;
+    font-family: var(--font-brand);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-normal text-brand-800;
+    font-family: var(--font-brand);
+    text-wrap: balance;
+  }
+
+  /* When the licensed Neue Haas Unica .woff2 files are added, uncomment and point
+     these at /public/fonts to serve it to all visitors:
+  @font-face {
+    font-family: "Neue Haas Unica";
+    src: local("Neue Haas Unica"),
+         url("/fonts/NeueHaasUnica-Regular.woff2") format("woff2");
+    font-weight: 400; font-display: swap;
+  }
+  @font-face {
+    font-family: "Neue Haas Unica";
+    src: local("Neue Haas Unica Medium"),
+         url("/fonts/NeueHaasUnica-Medium.woff2") format("woff2");
+    font-weight: 500 600; font-display: swap;
+  }
+  */
+
+  /* Disable display negative tracking and tighten leading for Hebrew. */
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] h4 {
+    letter-spacing: normal;
+    line-height: 1.25;
+  }
+
+  /* Visible, consistent focus state on all interactive elements. */
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    @apply outline-none ring-2 ring-accent-500 ring-offset-2 ring-offset-sand-50;
+  }
+
+  ::selection {
+    @apply bg-accent-500/20 text-brand-900;
+  }
+}
+
+@layer utilities {
+  /* Standard horizontal page padding. */
+  .px-gutter {
+    padding-inline: theme("spacing.gutter");
+  }
+}
+
+/* Respect reduced-motion globally (Framer Motion is also gated in JS). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

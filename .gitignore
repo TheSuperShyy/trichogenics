@@ -1,0 +1,42 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+/build
+next-env.d.ts
+
+# production / misc
+/coverage
+*.tsbuildinfo
+
+# env
+.env
+.env*.local
+
+# logs
+*.log
+npm-debug.log*
+
+# os / editor
+.DS_Store
+Thumbs.db
+
+# vercel
+.vercel
+
+# MASTER media — large source files. Transcode into public/media/ instead.
+/collections/
+
+# raw scraped source (reference only; not part of the app build)
+/scraped
+/scraped-1
+/scraped-2
+/scraped-3
+
+# internal working docs — kept local, out of the public repo (business/SEO strategy)
+/context.md
+/CLAUDE.md
