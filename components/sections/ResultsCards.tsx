@@ -6,6 +6,9 @@ import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 import type { HomeContent } from "@/content/schema";
 
+/** Full results page (legacy SEO URL, trailing slash). */
+const RESULTS_HREF = "/hair-transplant-results/";
+
 /**
  * Before/after cards with a "selected" card that stays lifted (seed-style): the
  * last-hovered card remains scaled up until another card is hovered (no revert
@@ -71,7 +74,7 @@ export function ResultsCards({
 
               {/* Button first, then quote (swapped). */}
               <a
-                href="/hair-transplant-results/"
+                href={RESULTS_HREF}
                 className={cn(
                   "mx-auto mt-5 inline-flex items-center gap-1.5 rounded-pill px-5 py-2 text-sm font-medium transition-colors",
                   isActive

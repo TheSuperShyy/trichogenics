@@ -2,6 +2,9 @@ import { Reveal } from "@/components/ui/Reveal";
 import { ResultsCards } from "./ResultsCards";
 import type { HomeContent } from "@/content/schema";
 
+/** Full results page (legacy SEO URL, trailing slash). */
+const RESULTS_HREF = "/hair-transplant-results/";
+
 /**
  * Before/after results — seed.com-style section: a dark band with a heading on
  * the start side, a short description + link on the end side, and a row of
@@ -32,7 +35,7 @@ export function ResultsGallery({
               Real outcomes from real Trichogenics patients — natural density designed to last.
             </p>
             <a
-              href="/hair-transplant-results/"
+              href={RESULTS_HREF}
               className="mt-3 inline-flex items-center gap-2 font-medium text-accent-300 underline underline-offset-4 hover:text-accent-100"
             >
               See all results
