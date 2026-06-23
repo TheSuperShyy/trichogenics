@@ -15,8 +15,11 @@ export function Hero({ hero }: { hero: HomeContent["hero"] }) {
       {/* Full-bleed media */}
       <HeroMedia media={hero.media} variant="fill" />
 
-      {/* Light scrim: opaque on the start side, fading to clear by ~60% */}
-      <div className="absolute inset-0 bg-gradient-to-r from-sand-50 via-sand-50/85 to-transparent ltr:bg-gradient-to-r rtl:bg-gradient-to-l" />
+      {/* Scrim — mobile: light at the top, image revealed toward the bottom
+          (seed-style stacked layout). Desktop: light on the start side, image on
+          the end side. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-sand-50 from-55% to-transparent lg:hidden" />
+      <div className="absolute inset-0 hidden bg-gradient-to-r from-sand-50 via-sand-50/85 to-transparent rtl:bg-gradient-to-l lg:block" />
 
       {/* Padding matches the header (px-5/8/16) so the headline's start edge
           aligns with the logo; items-start anchors the block to the top like seed. */}

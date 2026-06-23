@@ -90,3 +90,18 @@
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Mobile nav pill — unfurls from the logo (left -> right) to match the dropdown. */
+@keyframes pill-unfurl {
+  from {
+    clip-path: inset(0 100% 0 0 round 9999px);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 9999px);
+    opacity: 1;
+  }
+}
+.animate-pill-unfurl {
+  animation: pill-unfurl 750ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
