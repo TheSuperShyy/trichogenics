@@ -2,10 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Logo } from "./Logo";
-import { LanguageSwitcher } from "./LanguageSwitcher";
 import { buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
@@ -74,21 +73,43 @@ export function Header() {
   const nav = useNav();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [onDark, setOnDark] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<string | null>(null);
   const navRef = useRef<HTMLElement | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
+  const pathname = usePathname();
 
   // Grouped nav (EN) renders the mobile menu as seed-style tabs; the active tab's
   // section shows below. Flat nav (HE) falls back to a simple list.
   const mobileGroups = nav.filter((i) => i.children);
   const activeGroup = mobileGroups.find((g) => g.label === activeTab) ?? mobileGroups[0];
 
+  // One scroll/resize pass: toggle the frosted pill once scrolled, and detect
+  // whether a dark-themed section (`data-nav-theme="dark"`) is the section
+  // VISIBLE just under the header. We hit-test with elementFromPoint (not raw
+  // rects) so an overlapping light section at a seam — e.g. FeatureCare's -mt-10
+  // painting over the dark band's bottom — correctly wins. The probe sits just
+  // below the header's real box, so it tracks the announcement bar automatically.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const compute = () => {
+      setScrolled(window.scrollY > 10);
+      const rect = headerRef.current?.getBoundingClientRect();
+      const y = rect ? rect.bottom + 4 : 84;
+      const el = document.elementFromPoint(window.innerWidth / 2, y);
+      // If the probe lands on our own header UI (e.g. the open mobile menu panel
+      // overlaps this point), keep the current theme rather than misreading it.
+      if (el && headerRef.current?.contains(el)) return;
+      setOnDark(!!el?.closest('[data-nav-theme="dark"]'));
+    };
+    compute();
+    window.addEventListener("scroll", compute, { passive: true });
+    window.addEventListener("resize", compute);
+    return () => {
+      window.removeEventListener("scroll", compute);
+      window.removeEventListener("resize", compute);
+    };
+  }, [pathname]);
 
   // Close any open desktop dropdown on outside click / Escape.
   useEffect(() => {
@@ -116,18 +137,30 @@ export function Header() {
     return () => window.removeEventListener("resize", onResize);
   }, [open]);
 
-  // Frosted "pill" surface — only while scrolled. At the top (max hero) the nav
-  // is plain/transparent, like seed; padding stays constant to avoid a jump.
-  const surface = scrolled
-    ? "bg-white/70 shadow-sm ring-1 ring-brand-900/5 backdrop-blur-md"
-    : "";
+  // Dynamic theme — the section currently under the header sets it. At the very
+  // top (not scrolled) the pill is transparent (seed-style). Once scrolled it
+  // becomes a frosted pill: white over light sections, dark over dark ones. Logo,
+  // links and CTA flip with `onDark` so they always read against the backdrop.
+  const surface = !scrolled
+    ? ""
+    : onDark
+      ? "bg-brand-900/50 shadow-lg ring-1 ring-white/15 backdrop-blur-md"
+      : "bg-white/80 shadow-sm ring-1 ring-brand-900/5 backdrop-blur-md";
+  const linkText = onDark ? "text-white/90" : "text-brand-800";
+  const linkHover = onDark ? "hover:text-white" : "hover:text-accent-700";
+
+  // Glass panels (mobile pill/menu + desktop dropdowns) adapt to the theme too, so
+  // a menu opened while scrolled over a dark section isn't dark-on-dark.
+  const glass = onDark ? "bg-brand-900/80 ring-white/15" : "bg-slate-400/40 ring-white/40";
+  const glassText = onDark ? "text-white" : "text-brand-900";
+  const glassBorder = onDark ? "border-white/15" : "border-white/40";
 
   return (
-    <header className="sticky top-0 z-50">
+    <header ref={headerRef} className="sticky top-0 z-50">
       <div className="mx-auto flex h-20 max-w-[1800px] items-center px-gutter">
         {open ? (
           /* OPEN (mobile): the whole navbar is ONE pill — logo mark + section tabs + close */
-          <div className="flex w-full items-center gap-1.5 rounded-pill bg-slate-400/40 px-2.5 py-2 shadow-lg ring-1 ring-white/40 backdrop-blur-2xl backdrop-saturate-150 animate-pill-unfurl">
+          <div className={cn("flex w-full items-center gap-1.5 rounded-pill px-2.5 py-2 shadow-lg ring-1 backdrop-blur-2xl backdrop-saturate-150 animate-pill-unfurl", glass)}>
             <Link
               href="/"
               aria-label="Trichogenics — home"
@@ -151,7 +184,13 @@ export function Header() {
                     onClick={() => setActiveTab(g.label)}
                     className={cn(
                       "shrink-0 whitespace-nowrap rounded-pill px-3 py-1.5 text-sm font-semibold transition-colors",
-                      isActive ? "bg-brand-900/10 text-brand-900" : "text-brand-900/55 hover:bg-brand-900/5",
+                      isActive
+                        ? onDark
+                          ? "bg-white/15 text-white"
+                          : "bg-brand-900/10 text-brand-900"
+                        : onDark
+                          ? "text-white/60 hover:bg-white/10"
+                          : "text-brand-900/55 hover:bg-brand-900/5",
                     )}
                   >
                     {g.tab ?? g.label}
@@ -165,7 +204,10 @@ export function Header() {
               aria-expanded={true}
               aria-controls="mobile-nav"
               onClick={() => setOpen(false)}
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-brand-800 transition-colors hover:bg-brand-900/5"
+              className={cn(
+                "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors",
+                onDark ? "text-white hover:bg-white/10" : "text-brand-800 hover:bg-brand-900/5",
+              )}
             >
               <CloseIcon className="h-6 w-6" />
             </button>
@@ -173,14 +215,15 @@ export function Header() {
         ) : (
           /* CLOSED / desktop: logo pill + actions pill */
           <div className="flex w-full items-center justify-between gap-4">
-            <div className={cn("flex items-center gap-6 rounded-pill px-5 py-2.5 transition-all duration-300", surface)}>
-              <Logo />
+            <div className={cn("flex items-center gap-6 rounded-pill px-3 py-1.5 transition-all duration-300 xl:px-5 xl:py-2.5", surface)}>
+              <Logo tone={onDark ? "light" : "dark"} />
               <nav ref={navRef} aria-label="Primary" className="hidden items-center gap-5 xl:flex">
                 {nav.map((item) =>
                   item.children ? (
                     <DropdownNav
                       key={item.label}
                       item={item}
+                      onDark={onDark}
                       open={openMenu === item.label}
                       onOpen={() => setOpenMenu(item.label)}
                       onClose={() => setOpenMenu((m) => (m === item.label ? null : m))}
@@ -189,7 +232,7 @@ export function Header() {
                     <a
                       key={item.label}
                       href={item.href}
-                      className="whitespace-nowrap text-sm font-medium text-brand-800 transition-colors hover:text-accent-700"
+                      className={cn("whitespace-nowrap text-sm font-medium transition-colors", linkText, linkHover)}
                     >
                       {item.label}
                     </a>
@@ -198,10 +241,19 @@ export function Header() {
               </nav>
             </div>
             <div className={cn("flex items-center gap-2 rounded-pill p-1.5 transition-all duration-300 sm:gap-3 sm:ps-4", surface)}>
-              <span className="hidden sm:inline-flex">
-                <LanguageSwitcher />
-              </span>
-              <a href="#consult" className={buttonVariants({ variant: "dark", size: "sm" })}>
+              <a
+                href="#consult"
+                className={buttonVariants({
+                  variant: "dark",
+                  size: "sm",
+                  className: cn(
+                    // Phones get a clean logo + hamburger; the CTA lives in the hero
+                    // and the menu. Show it again from sm up, and never let it wrap.
+                    "hidden whitespace-nowrap sm:inline-flex",
+                    onDark && "bg-white text-brand-900 hover:bg-white/90 hover:text-brand-900",
+                  ),
+                })}
+              >
                 {t("bookConsult")}
               </a>
               <button
@@ -210,7 +262,7 @@ export function Header() {
                 aria-expanded={false}
                 aria-controls="mobile-nav"
                 onClick={() => setOpen(true)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-pill text-brand-800 xl:hidden"
+                className={cn("inline-flex h-9 w-9 items-center justify-center rounded-pill transition-colors xl:hidden", linkText)}
               >
                 <MenuIcon className="h-6 w-6" />
               </button>
@@ -223,10 +275,11 @@ export function Header() {
       <div
         id="mobile-nav"
         className={cn(
-          "absolute inset-x-3 top-[4.75rem] overflow-hidden rounded-[1.75rem] bg-slate-400/40 shadow-[0_28px_70px_-18px_rgba(7,19,49,0.5)] ring-1 ring-white/40 backdrop-blur-2xl backdrop-saturate-150 transition-[opacity,clip-path] duration-[750ms] ease-[cubic-bezier(0.22,1,0.36,1)] xl:hidden",
+          "absolute inset-x-3 top-[4.75rem] overflow-hidden rounded-[1.75rem] shadow-[0_28px_70px_-18px_rgba(7,19,49,0.5)] ring-1 backdrop-blur-2xl backdrop-saturate-150 transition-[opacity,clip-path] duration-[750ms] ease-[cubic-bezier(0.22,1,0.36,1)] xl:hidden",
+          glass,
           open
             ? "visible opacity-100 [clip-path:inset(0_0_0_0_round_1.75rem)]"
-            : "invisible opacity-0 [clip-path:inset(0_100%_0_0_round_1.75rem)]",
+            : "invisible opacity-0 [clip-path:inset(0_100%_0_0_round_1.75rem)] rtl:[clip-path:inset(0_0_0_100%_round_1.75rem)]",
         )}
       >
         {/* Selected section's dropdown — the tabs live up in the navbar */}
@@ -244,7 +297,7 @@ export function Header() {
                         <Image src={c.thumb} alt="" fill sizes="48px" className="object-cover" />
                       </span>
                     ) : null}
-                    <span className="text-sm font-semibold leading-snug text-brand-900">{c.label}</span>
+                    <span className={cn("text-sm font-semibold leading-snug", glassText)}>{c.label}</span>
                   </a>
                 </li>
               ))}
@@ -253,7 +306,11 @@ export function Header() {
                   <a
                     href={activeGroup.footer.href}
                     onClick={() => setOpen(false)}
-                    className="mt-1 flex items-center justify-center gap-2 border-t border-white/30 px-4 pb-1 pt-3 text-sm font-semibold text-brand-900 underline decoration-from-font underline-offset-4"
+                    className={cn(
+                      "mt-1 flex items-center justify-center gap-2 border-t px-4 pb-1 pt-3 text-sm font-semibold underline decoration-from-font underline-offset-4",
+                      glassBorder,
+                      glassText,
+                    )}
                   >
                     {activeGroup.footer.label}
                     <span aria-hidden>→</span>
@@ -268,19 +325,22 @@ export function Header() {
                 key={item.label}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="block rounded-2xl px-3 py-3 text-sm font-semibold text-brand-900 hover:bg-white/35"
+                className={cn("block rounded-2xl px-3 py-3 text-sm font-semibold hover:bg-white/35", glassText)}
               >
                 {item.label}
               </a>
             ))}
           </div>
         )}
-        <div className="flex items-center justify-between gap-3 border-t border-white/40 p-3">
-          <LanguageSwitcher />
+        <div className={cn("flex items-center justify-center border-t p-3", glassBorder)}>
           <a
             href="#consult"
             onClick={() => setOpen(false)}
-            className={buttonVariants({ variant: "dark", size: "sm" })}
+            className={buttonVariants({
+              variant: "dark",
+              size: "sm",
+              className: onDark ? "bg-white text-brand-900 hover:bg-white/90 hover:text-brand-900" : undefined,
+            })}
           >
             {t("bookConsult")}
           </a>
@@ -293,11 +353,13 @@ export function Header() {
 /** A single top-level dropdown group — opens on hover and click, seed-style. */
 function DropdownNav({
   item,
+  onDark,
   open,
   onOpen,
   onClose,
 }: {
   item: NavItem;
+  onDark: boolean;
   open: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -305,6 +367,13 @@ function DropdownNav({
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const panelId = `nav-${item.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+
+  // The frosted panel adapts to the theme so it stays legible when opened while
+  // the header is over a dark section.
+  const glass = onDark ? "bg-brand-900/80 ring-white/15" : "bg-slate-400/40 ring-white/40";
+  const glassText = onDark ? "text-white" : "text-brand-900";
+  const glassBorder = onDark ? "border-white/15" : "border-white/40";
+  const footerHover = onDark ? "hover:text-sky-300" : "hover:text-accent-700";
 
   const cancelClose = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -350,8 +419,14 @@ function DropdownNav({
           else onOpen();
         }}
         className={cn(
-          "inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium transition-colors hover:text-accent-700",
-          open ? "text-accent-700" : "text-brand-800",
+          "inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium transition-colors",
+          open
+            ? onDark
+              ? "text-white"
+              : "text-accent-700"
+            : onDark
+              ? "text-white/90 hover:text-white"
+              : "text-brand-800 hover:text-accent-700",
         )}
       >
         {item.label}
@@ -361,7 +436,8 @@ function DropdownNav({
       <div
         id={panelId}
         className={cn(
-          "absolute start-0 top-full z-50 mt-3 w-[19rem] max-w-[calc(100vw-2rem)] origin-top overflow-hidden rounded-[1.75rem] bg-slate-400/40 p-2 shadow-[0_28px_70px_-18px_rgba(7,19,49,0.5)] ring-1 ring-white/40 backdrop-blur-2xl backdrop-saturate-150 transition-[opacity,transform] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "absolute start-0 top-full z-50 mt-3 w-[19rem] max-w-[calc(100vw-2rem)] origin-top overflow-hidden rounded-[1.75rem] p-2 shadow-[0_28px_70px_-18px_rgba(7,19,49,0.5)] ring-1 backdrop-blur-2xl backdrop-saturate-150 transition-[opacity,transform] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          glass,
           open ? "visible translate-y-0 scale-100 opacity-100" : "invisible -translate-y-1 scale-95 opacity-0",
         )}
       >
@@ -394,7 +470,7 @@ function DropdownNav({
                     />
                   </span>
                 ) : null}
-                <span className="text-[0.95rem] font-semibold leading-snug text-brand-900">{c.label}</span>
+                <span className={cn("text-[0.95rem] font-semibold leading-snug", glassText)}>{c.label}</span>
               </a>
             </li>
           ))}
@@ -406,7 +482,12 @@ function DropdownNav({
               cancelClose();
               onClose();
             }}
-            className="mt-1 flex items-center justify-center gap-2 border-t border-white/40 px-4 pb-1.5 pt-3 text-sm font-semibold text-brand-900 underline decoration-from-font underline-offset-4 transition-colors hover:text-accent-700"
+            className={cn(
+              "mt-1 flex items-center justify-center gap-2 border-t px-4 pb-1.5 pt-3 text-sm font-semibold underline decoration-from-font underline-offset-4 transition-colors",
+              glassBorder,
+              glassText,
+              footerHover,
+            )}
           >
             {item.footer.label}
             <span aria-hidden>→</span>

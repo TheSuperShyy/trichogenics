@@ -55,3 +55,23 @@ for (const c of CLIPS) {
   console.log("transcoded:", c.out, "<-", c.in);
 }
 console.log("\nDone -> public/media/video/");
+
+// Full-bleed hero background loop (portrait B-roll, muted/no audio) + poster (LCP).
+const HERO_OUT = join(process.cwd(), "public", "media", "hero");
+mkdirSync(HERO_OUT, { recursive: true });
+const heroSrc = join(SRC, "shoot bw.mov");
+if (existsSync(heroSrc)) {
+  const heroMp4 = join(HERO_OUT, "hero-loop.mp4");
+  const heroPoster = join(HERO_OUT, "hero-loop.jpg");
+  run([
+    "-y", "-ss", "0", "-i", heroSrc, "-t", "14",
+    "-vf", "scale=-2:1920", "-c:v", "libx264", "-crf", "28",
+    "-preset", "veryfast", "-pix_fmt", "yuv420p", "-an",
+    "-movflags", "+faststart", heroMp4,
+  ]);
+  run(["-y", "-ss", "2", "-i", heroSrc, "-frames:v", "1", "-vf", "scale=-2:1920", heroPoster]);
+  console.log("transcoded: hero-loop <- shoot bw.mov");
+} else {
+  console.warn("skip hero (missing): shoot bw.mov");
+}
+console.log("Done -> public/media/hero/");

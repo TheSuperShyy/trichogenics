@@ -24,9 +24,9 @@ export const homeEn: HomeContent = {
     ctaSecondary: { label: "Free AI Hair Analysis", href: "#ai-analysis" },
     trust: ["ABHRS Diplomates", "ISHRS Members", "World FUE Institute", "Rated on Trustpilot"],
     media: {
-      kind: "image",
-      src: "/media/hero/hero.jpg",
-      poster: "/media/hero/hero.jpg",
+      kind: "video",
+      src: "/media/hero/hero-loop.mp4",
+      poster: "/media/hero/hero-loop.jpg",
       alt: "Trichogenics board-certified surgeons performing a hair restoration procedure",
     },
   },
