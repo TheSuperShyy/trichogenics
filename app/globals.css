@@ -105,3 +105,17 @@
 .animate-pill-unfurl {
   animation: pill-unfurl 750ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+/* RTL: the logo/hamburger sit on the right, so the pill must unfurl from the right. */
+[dir="rtl"] .animate-pill-unfurl {
+  animation-name: pill-unfurl-rtl;
+}
+@keyframes pill-unfurl-rtl {
+  from {
+    clip-path: inset(0 0 0 100% round 9999px);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 9999px);
+    opacity: 1;
+  }
+}

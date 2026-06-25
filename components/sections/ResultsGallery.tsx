@@ -23,7 +23,7 @@ export function ResultsGallery({
   const cards = items.slice(0, 4);
 
   return (
-    <section id="results" className="relative -mt-10 scroll-mt-24 bg-brand-900 py-section text-white">
+    <section id="results" data-nav-theme="dark" className="relative -mt-10 scroll-mt-24 bg-brand-900 py-section text-white">
       <div className="mx-auto w-full max-w-[1800px] px-gutter">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <Reveal>
