@@ -31,15 +31,25 @@ export const homeEn: HomeContent = {
     },
   },
 
+  // "As featured in" — logos migrated from the live trichogenics.com press strip
+  // (assets in public/media/press/). width/height = intrinsic ratio for next/image.
   pressLogos: [
-    { name: "New York Post" },
-    { name: "Yahoo" },
-    { name: "Today" },
-    { name: "Forbes" },
-    { name: "Elle" },
-    { name: "Women's Day" },
-    { name: "SheFinds" },
-    { name: "Brit+Co" },
+    { name: "New York Post", src: "/media/press/new-york-post-white.webp", width: 300, height: 46 },
+    { name: "Yahoo", src: "/media/press/yahoo.webp", width: 768, height: 191 },
+    { name: "Today", src: "/media/press/today.webp", width: 768, height: 576 },
+    { name: "Forbes", src: "/media/press/forbes.webp", width: 450, height: 118 },
+    { name: "Elle", src: "/media/press/elle-transparent.webp", width: 300, height: 108 },
+    { name: "Women's Day", src: "/media/press/womens-day.webp", width: 768, height: 147 },
+    { name: "SheFinds", src: "/media/press/shefinds.webp", width: 150, height: 136 },
+    { name: "Brit+Co", src: "/media/press/brit-co.webp", width: 450, height: 74 },
+  ],
+
+  // "Proud members of:" — professional certification badges from the live site
+  // (assets in public/media/members/, full-colour transparent WebP).
+  memberLogos: [
+    { name: "American Board of Hair Restoration Surgery (ABHRS)", src: "/media/members/abhrs.webp", width: 322, height: 180 },
+    { name: "International Society of Hair Restoration Surgery (ISHRS)", src: "/media/members/ishrs.webp", width: 276, height: 166 },
+    { name: "World FUE Institute", src: "/media/members/worldfue.webp", width: 438, height: 194 },
   ],
 
   credentials: [
@@ -88,7 +98,7 @@ export const homeEn: HomeContent = {
         credentials: ["Diplomate, ABHRS"],
         memberships: ["World FUE Institute", "ISHRS Patient Safety Committee"],
         bio: "Globally recognized hair restoration surgeon. Diplomate of the American Board of Hair Restoration Surgery (ABHRS). Fellow of the World FUE Institute and ISHRS Patient Safety Committee Member.",
-        photo: "/media/team/dr-asi-peretz.jpg",
+        photo: "/media/team/dr-asi-peretz-2026.jpg",
       },
       {
         name: "Dr. Eric Peretz",
@@ -96,7 +106,7 @@ export const homeEn: HomeContent = {
         credentials: ["Diplomate, ABHRS"],
         memberships: ["World FUE Institute"],
         bio: "World renowned hair restoration surgeon. Diplomate of the American Board of Hair Restoration Surgery (ABHRS). Fellow of the World FUE Institute.",
-        photo: "/media/team/dr-eric-peretz.jpg",
+        photo: "/media/team/dr-eric-peretz-2026.jpg",
       },
     ],
   },

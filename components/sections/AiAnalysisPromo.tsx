@@ -20,7 +20,7 @@ export function AiAnalysisPromo() {
       {/* Background: light cap · navy rule · gray band. The cap matches the section
           above so the rule reads as a single line drawn across a continuous field. */}
       <div aria-hidden className="absolute inset-0 -z-10 flex flex-col">
-        <div className="h-24 bg-sand-50 sm:h-28 lg:h-[13rem]" />
+        <div className="h-24 bg-sand-50 sm:h-28 lg:h-[9rem]" />
         <div className="h-1 bg-brand-800" />
         <div className="flex-1 bg-[#E7EAF0]" />
       </div>
@@ -37,7 +37,7 @@ export function AiAnalysisPromo() {
         />
       </div>
 
-      <Container className="relative pb-12 pt-4 lg:pb-16 lg:pt-[14rem]">
+      <Container className="relative pb-12 pt-4 lg:pb-16 lg:pt-[10rem]">
         <Reveal className="max-w-xl">
           <Eyebrow>Free analysis</Eyebrow>
           <h2 className="mt-3 text-h2 text-brand-800">

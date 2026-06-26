@@ -33,7 +33,12 @@ const Hero = z.object({
   media: MediaRef,
 });
 
-const PressLogo = z.object({ name: z.string(), src: z.string().optional() });
+const PressLogo = z.object({
+  name: z.string(),
+  src: z.string().optional(),
+  width: z.number().optional(),
+  height: z.number().optional(),
+});
 const Credential = z.object({ title: z.string(), subtitle: z.string().optional() });
 const BeforeAfter = z.object({
   name: z.string(),
@@ -100,6 +105,9 @@ export const HomeContent = z.object({
 
   // EN brand-story sections (optional so HE can omit them)
   pressLogos: z.array(PressLogo).optional(),
+  // "Proud members of:" — professional credential badges (same logo shape as
+  // pressLogos, but rendered in full colour rather than as muted press marks).
+  memberLogos: z.array(PressLogo).optional(),
   credentials: z.array(Credential).optional(),
   beforeAfter: z.array(BeforeAfter).optional(),
   process: z.array(ProcessStep).optional(),

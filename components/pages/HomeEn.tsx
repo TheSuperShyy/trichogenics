@@ -5,6 +5,7 @@ import { MethodSection } from "@/components/sections/MethodSection";
 import { JourneyStatement } from "@/components/sections/JourneyStatement";
 import { VideoShowcase } from "@/components/sections/VideoShowcase";
 import { AiAnalysisPromo } from "@/components/sections/AiAnalysisPromo";
+import { MemberLogos } from "@/components/sections/MemberLogos";
 import { Doctors } from "@/components/sections/Doctors";
 import type { HomeContent } from "@/content/schema";
 
@@ -20,13 +21,22 @@ export function HomeEn({ content }: { content: HomeContent }) {
     <main id="main">
       <Hero hero={content.hero} />
       {content.beforeAfter ? (
-        <ResultsGallery items={content.beforeAfter} eyebrow="Results" heading="Before & after" />
+        <ResultsGallery
+          items={content.beforeAfter}
+          eyebrow="Results"
+          heading="Before & after"
+          pressLogos={content.pressLogos}
+          pressLabel="As featured in"
+        />
       ) : null}
       <FeatureCare />
       <MethodSection />
       <JourneyStatement />
       <VideoShowcase />
       <AiAnalysisPromo />
+      {content.memberLogos ? (
+        <MemberLogos logos={content.memberLogos} label="Proud members of:" />
+      ) : null}
       {content.doctors ? <Doctors data={content.doctors} eyebrow="Your surgeons" /> : null}
     </main>
   );
