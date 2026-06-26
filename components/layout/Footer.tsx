@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/Container";
+import { Logo } from "@/components/layout/Logo";
 import { SITE } from "@/lib/site";
 
 const exploreLinks = [
@@ -18,10 +19,8 @@ export function Footer() {
     <footer className="bg-brand-900 text-sky-100">
       <Container className="grid gap-10 py-section md:grid-cols-2 lg:grid-cols-4">
         <div className="lg:col-span-1">
-          <p className="font-display text-xl font-semibold text-white">
-            Tricho<span className="text-accent-500">genics</span>
-          </p>
-          <p className="mt-3 max-w-xs text-sm text-sky-200/80">{t("tagline")}</p>
+          <Logo tone="light" />
+          <p className="mt-4 max-w-xs text-sm text-sky-200/80">{t("tagline")}</p>
           <div className="mt-5 flex flex-wrap gap-2 text-xs text-sky-200/70">
             <span>ABHRS</span>
             <span aria-hidden>·</span>

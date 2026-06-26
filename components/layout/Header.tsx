@@ -46,8 +46,8 @@ const EN_NAV: NavItem[] = [
     label: "Your Team",
     tab: "Team",
     children: [
-      { href: "/your-hair-transplant-team/", label: "Meet Our Team", thumb: "/media/team/dr-asi-peretz.jpg" },
-      { href: "/contact-trichogenics/", label: "Contact Trichogenics", thumb: "/media/team/dr-eric-peretz.jpg" },
+      { href: "/your-hair-transplant-team/", label: "Meet Our Team", thumb: "/media/team/dr-asi-peretz-2026.jpg" },
+      { href: "/contact-trichogenics/", label: "Contact Trichogenics", thumb: "/media/team/dr-eric-peretz-2026.jpg" },
       { href: "/trichogenics-hair-blog/", label: "Blog", thumb: "/media/hero/hero.jpg" },
     ],
     footer: { label: "Meet the full team", href: "/your-hair-transplant-team/" },
@@ -164,9 +164,15 @@ export function Header() {
             <Link
               href="/"
               aria-label="Trichogenics — home"
-              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-800 text-sm font-bold text-white"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-brand-800"
             >
-              T
+              <Image
+                src="/media/brand/mark-2026.png"
+                alt="Trichogenics"
+                width={849}
+                height={962}
+                className="h-6 w-6 object-contain"
+              />
             </Link>
             <div
               role="tablist"

@@ -22,8 +22,9 @@ const clips = [
  * heading, a large centred video with neighbours peeking, and a seed-style
  * control cluster: a mute toggle, the current clip's play/pause + caption pill,
  * and a thumbnail of the *next* clip (click to advance). The play-pill and the
- * next-thumbnail swap sides depending on which clip is showing. Clips do NOT
- * autoplay — the centred clip is paused on its poster until the user plays it.
+ * next-thumbnail swap sides depending on which clip is showing. The centred clip
+ * AUTOPLAYS (muted, per browser policy — the mute button enables sound); the
+ * play/pause button can still pause it. Honours prefers-reduced-motion.
  */
 export function VideoShowcase() {
   const locale = useLocale();
@@ -33,9 +34,11 @@ export function VideoShowcase() {
     direction: locale === "he" ? "rtl" : "ltr",
   });
   const [selected, setSelected] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
+  const [playing, setPlaying] = useState(true);
+  const [muted, setMuted] = useState(true); // muted so the centred clip can autoplay
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const mutedRef = useRef(true);
+  const reducedMotionRef = useRef(false);
 
   const onSelect = useCallback(() => {
     if (embla) setSelected(embla.selectedScrollSnap());
@@ -50,18 +53,41 @@ export function VideoShowcase() {
     };
   }, [embla, onSelect]);
 
-  // On selection change: pause + rewind every clip (nothing autoplays). The new
-  // centred clip waits on its first frame until the user presses play.
+  // Detect prefers-reduced-motion once (skip autoplay if set); mirror muted into
+  // a ref so the autoplay effect can read it without restarting on mute toggle.
   useEffect(() => {
-    setPlaying(false);
-    videoRefs.current.forEach((v) => {
+    reducedMotionRef.current =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
+  }, []);
+
+  useEffect(() => {
+    mutedRef.current = muted;
+  }, [muted]);
+
+  // On selection change: autoplay the centred clip (muted, per browser policy),
+  // pause + rewind every other clip. Skips autoplay under reduced-motion.
+  useEffect(() => {
+    videoRefs.current.forEach((v, i) => {
       if (!v) return;
-      v.pause();
-      v.currentTime = 0;
+      if (i === selected && !reducedMotionRef.current) {
+        v.muted = mutedRef.current;
+        v.currentTime = 0;
+        const p = v.play();
+        if (p && typeof p.then === "function") {
+          p.then(() => setPlaying(true)).catch(() => setPlaying(false));
+        } else {
+          setPlaying(true);
+        }
+      } else {
+        v.pause();
+        v.currentTime = 0;
+        if (i === selected) setPlaying(false);
+      }
     });
   }, [selected]);
 
-  // Keep the mute state mirrored onto the video elements.
+  // Keep the mute state mirrored onto the video elements (without restarting).
   useEffect(() => {
     videoRefs.current.forEach((v) => {
       if (v) v.muted = muted;
@@ -88,7 +114,7 @@ export function VideoShowcase() {
   const next = clips[nextIndex] ?? clips[0]!;
 
   return (
-    <section className="bg-sand-50 py-12">
+    <section className="bg-sand-50 pt-12 pb-3">
       <Container>
         {/* Centred header — seed-style */}
         <Reveal className="flex flex-col items-center gap-4 text-center">

@@ -17,18 +17,19 @@ export function Hero({ hero }: { hero: HomeContent["hero"] }) {
 
       {/* Scrim — mobile: a flat translucent veil so the video shows through
           evenly behind the text (no gradient). Desktop: light on the start side,
-          image on the end side. */}
-      <div className="absolute inset-0 bg-sand-200/70 lg:hidden" />
-      <div className="absolute inset-0 hidden bg-gradient-to-r from-sand-200 via-sand-200/85 to-transparent rtl:bg-gradient-to-l lg:block" />
+          image on the end side. Cool brand-50 tint (not warm sand) so it sits in
+          the navy palette. */}
+      <div className="absolute inset-0 bg-brand-50/75 lg:hidden" />
+      <div className="absolute inset-0 hidden bg-gradient-to-r from-brand-50 via-brand-50/85 to-transparent rtl:bg-gradient-to-l lg:block" />
 
       {/* Padding matches the header (px-5/8/16) so the headline's start edge
           aligns with the logo; items-start anchors the block to the top like seed. */}
       <div className="relative mx-auto flex min-h-[calc(100vh-44px)] max-w-[1800px] items-start px-gutter pb-16 pt-24">
         <FadeIn className="-ms-[3px] max-w-lg">
-          <h1 className="max-w-[29rem] font-seed text-[clamp(1.875rem,3vw,2.5rem)] font-normal leading-[1.1] tracking-tight text-brand-800">
+          <h1 className="max-w-[32rem] font-seed text-[clamp(2.125rem,1.4rem+3.6vw,3rem)] font-normal leading-[1.08] tracking-tight text-brand-800">
             {hero.h1}
           </h1>
-          <p className="mt-5 max-w-md font-seed text-base text-ink-700">{hero.subhead}</p>
+          <p className="mt-5 max-w-md font-seed text-lg text-ink-700">{hero.subhead}</p>
           <div className="mt-10 flex flex-wrap items-center gap-5">
             <a href={hero.ctaPrimary.href} className={buttonVariants({ variant: "dark", size: "md" })}>
               {hero.ctaPrimary.label}

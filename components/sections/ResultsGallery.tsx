@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { ResultsCards } from "./ResultsCards";
+import { PressLogos } from "./PressLogos";
 import type { HomeContent } from "@/content/schema";
 
 /** Full results page (legacy SEO URL, trailing slash). */
@@ -15,10 +16,14 @@ export function ResultsGallery({
   items,
   eyebrow,
   heading,
+  pressLogos,
+  pressLabel,
 }: {
   items: NonNullable<HomeContent["beforeAfter"]>;
   eyebrow: string;
   heading: string;
+  pressLogos?: HomeContent["pressLogos"];
+  pressLabel?: string;
 }) {
   const cards = items.slice(0, 4);
 
@@ -45,6 +50,17 @@ export function ResultsGallery({
         </div>
 
         <ResultsCards items={cards} />
+
+        {pressLogos && pressLogos.length > 0 ? (
+          <div className="mt-14 border-t border-white/10 pt-10 sm:mt-16">
+            <PressLogos
+              logos={pressLogos}
+              label={pressLabel ?? "As featured in"}
+              tone="dark"
+              embedded
+            />
+          </div>
+        ) : null}
       </div>
     </section>
   );
