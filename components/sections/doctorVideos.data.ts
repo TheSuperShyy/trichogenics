@@ -11,14 +11,14 @@
 export const DOCTOR_VIDEOS_EYEBROW = "Watch";
 export const DOCTOR_VIDEOS_HEADING = "Meet the Best Hair Transplantation Doctors Overseas";
 export const DOCTOR_VIDEOS_SUBHEAD =
-  "Doctors, not technicians — hear from the ABHRS-certified surgeons who perform every procedure themselves.";
+  "Doctors, not technicians. Hear from the ABHRS-certified surgeons who perform every procedure themselves.";
 
 export const DOCTOR_VIDEOS_FEATURED = {
   id: "S_ZTPZ6u-zY",
-  title: "Welcome to Trichogenics — meet Dr. Asi & Dr. Eric Peretz",
+  title: "Welcome to Trichogenics: meet Dr. Asi & Dr. Eric Peretz",
 } as const;
 
 export const DOCTOR_VIDEOS_SUPPORTING = [
-  { id: "OjOBmVC4mc0", title: "The Trivellini implanter — manual, rotating & oscillating modes" },
+  { id: "OjOBmVC4mc0", title: "The Trivellini implanter: manual, rotating & oscillating modes" },
   { id: "EvSqm2N5dz4", title: "Oral vs. topical finasteride, explained by our doctors" },
 ] as const;

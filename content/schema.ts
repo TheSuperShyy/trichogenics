@@ -60,6 +60,24 @@ const DoctorBio = z.object({
   videoId: z.string().optional(), // YouTube id
 });
 const TechItem = z.object({ title: z.string(), body: z.string(), image: z.string().optional() });
+// Standout — the "what makes us different" feature list: an auto-advancing,
+// click/keyboard-selectable set of differentiators, each paired with an image
+// shown alongside the active item. `icon` is a key into the section's inline
+// icon set (optional); `alt` falls back to `title` when omitted.
+const StandoutFeature = z.object({
+  title: z.string(),
+  tag: z.string().optional(), // short label shown under the title in the carousel design
+  body: z.string(),
+  image: z.string(),
+  alt: z.string().optional(),
+  icon: z.string().optional(),
+});
+const Standout = z.object({
+  eyebrow: z.string(),
+  heading: z.string(),
+  intro: z.string().optional(),
+  features: z.array(StandoutFeature).min(1),
+});
 const Stat = z.object({ value: z.string(), label: z.string() });
 const Included = z.object({
   heading: z.string(),
@@ -70,7 +88,9 @@ const Included = z.object({
 const Testimonial = z.object({
   name: z.string(),
   location: z.string().optional(),
+  designation: z.string().optional(), // shown under the name in the testimonials carousel
   quote: z.string(),
+  image: z.string().optional(), // patient portrait for the circular carousel
   videoId: z.string().optional(),
 });
 const LocationInfo = z.object({
@@ -78,6 +98,9 @@ const LocationInfo = z.object({
   countryName: z.string(),
   address: z.string(),
   mapsUrl: z.string().optional(),
+  image: z.string().optional(), // still establishing shot for the card header
+  video: z.string().optional(), // looping cinemagraph; `poster` is its still/LCP
+  poster: z.string().optional(), // poster for the video + reduced-motion fallback
 });
 const FaqItem = z.object({ question: z.string(), answer: z.string() });
 
@@ -126,6 +149,7 @@ export const HomeContent = z.object({
   mosaic: Mosaic.optional(),
   process: z.array(ProcessStep).optional(),
   whyChoose: z.object({ heading: z.string(), features: z.array(Feature) }).optional(),
+  standout: Standout.optional(),
   doctors: z
     .object({ heading: z.string(), intro: z.string().optional(), people: z.array(DoctorBio) })
     .optional(),
@@ -149,6 +173,7 @@ export const HomeContent = z.object({
 
 export type HomeContent = z.infer<typeof HomeContent>;
 export type MosaicContent = z.infer<typeof Mosaic>;
+export type StandoutContent = z.infer<typeof Standout>;
 export type FaqItem = z.infer<typeof FaqItem>;
 export type Testimonial = z.infer<typeof Testimonial>;
 export type DoctorBio = z.infer<typeof DoctorBio>;

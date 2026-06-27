@@ -61,9 +61,9 @@ export const homeEn: HomeContent = {
 
   beforeAfter: [
     { name: "Luke", quote: "Meticulous care from start to finish.", image: "/media/results/bf1.jpg" },
-    { name: "Costa", quote: "Worth the journey — they explained every step.", image: "/media/results/bf2.jpg" },
+    { name: "Costa", quote: "Worth the journey. They explained every step.", image: "/media/results/bf2.jpg" },
     { name: "Dean", quote: "The team pours real pride into their work.", image: "/media/results/bf3.jpg" },
-    { name: "Aidan", quote: "10/10 — a credit to the profession.", image: "/media/results/bf4.jpg" },
+    { name: "Aidan", quote: "10/10. A credit to the profession.", image: "/media/results/bf4.jpg" },
     { name: "Fede", quote: "Incredibly well organised and caring.", image: "/media/results/bf-5.jpg" },
     { name: "Peter", quote: "In my opinion, the best clinic in Greece.", image: "/media/results/bf-6.jpg" },
   ],
@@ -86,10 +86,10 @@ export const homeEn: HomeContent = {
   },
 
   process: [
-    { step: 1, title: "Free consultation", body: "Share photos and goals online or book a video call — our surgeons review your case directly." },
+    { step: 1, title: "Free consultation", body: "Share photos and goals online or book a video call. Our surgeons review your case directly." },
     { step: 2, title: "Personalised plan & quote", body: "A tailored graft plan, hairline design, and transparent, all-inclusive pricing." },
-    { step: 3, title: "Travel & arrival", body: "Airport pickup, vetted accommodation, and a chauffeur to the clinic — handled for you." },
-    { step: 4, title: "Your procedure", body: "Performed by the doctors using the Trivellini system — not delegated to technicians." },
+    { step: 3, title: "Travel & arrival", body: "Airport pickup, vetted accommodation, and a chauffeur to the clinic, all handled for you." },
+    { step: 4, title: "Your procedure", body: "Performed by the doctors using the Trivellini system, not delegated to technicians." },
     { step: 5, title: "Recovery & aftercare", body: "Detailed aftercare, direct access to your team, and follow-up at every milestone." },
     { step: 6, title: "Results at 12 months", body: "Density and a natural hairline that keep maturing through the first year." },
   ],
@@ -99,7 +99,7 @@ export const homeEn: HomeContent = {
     features: [
       { title: "Surgeon-performed care", body: "Every graft is placed under the direct work of board-certified surgeons." },
       { title: "Latest technology", body: "Trivellini Mamba extraction and the ASH Omni 3 microscope for precise, gentle harvesting." },
-      { title: "Natural by design", body: "Hairlines designed for your face and age — undetectable, not 'transplanted'." },
+      { title: "Natural by design", body: "Hairlines designed for your face and age. Undetectable, not 'transplanted'." },
       { title: "End-to-end concierge", body: "Travel, stay, and aftercare coordinated so you can focus on your result." },
     ],
   },
@@ -124,6 +124,55 @@ export const homeEn: HomeContent = {
         memberships: ["World FUE Institute"],
         bio: "World renowned hair restoration surgeon. Diplomate of the American Board of Hair Restoration Surgery (ABHRS). Fellow of the World FUE Institute.",
         photo: "/media/team/dr-eric-peretz-2026.jpg",
+      },
+    ],
+  },
+
+  standout: {
+    eyebrow: "Why Trichogenics",
+    heading: "What makes Trichogenics stand out as a hair transplant clinic overseas?",
+    intro:
+      "At Trichogenics, only highly skilled doctors perform your hair transplant from start to finish. You will never be treated by a technician or nurse. Every step of your procedure is handled by expert surgeons to ensure the highest level of care, precision, and results.",
+    features: [
+      {
+        title: "Top techniques",
+        tag: "FUE & DHI",
+        body: "We use advanced Follicular Unit Extraction (FUE) and Direct Hair Implantation with Choi pens to deliver natural-looking results with minimal scarring. These minimally invasive techniques mean a quick recovery while helping you achieve the hair you want.",
+        image: "/media/standout/top-techniques.jpg",
+        alt: "Trichogenics surgeons performing a follicular unit extraction",
+        icon: "technique",
+      },
+      {
+        title: "Skilled surgeons",
+        tag: "ABHRS · WFI · ISHRS",
+        body: "Our doctors are highly trained, experienced members of the International Society of Hair Restoration Surgery, the American Board of Hair Restoration Surgery (ABHRS), and the World FUE Institute (WFI), so every procedure meets international standards of excellence.",
+        image: "/media/standout/skilled-surgeons.jpg",
+        alt: "Dr. Asi and Dr. Eric Peretz, Trichogenics' co-founding surgeons",
+        icon: "surgeon",
+      },
+      {
+        title: "Patient care",
+        tag: "Concierge experience",
+        body: "We focus on your comfort and happiness from start to finish. Every step, from consultation to post-operative care, is designed with you in mind. Our surgeons personally oversee your recovery through in-person and virtual visits, so you are looked after at every stage. Experience a luxury getaway in Greece with the added benefit of restored hair.",
+        image: "/media/journey/main.jpg",
+        alt: "A Trichogenics surgeon planning a patient's hairline",
+        icon: "care",
+      },
+      {
+        title: "Great results",
+        tag: "Proven outcomes",
+        body: "Hundreds of happy patients say we helped them get affordable hair transplants that look amazing. Their transformations are a testament to our commitment to excellence.",
+        image: "/media/results/bf1.jpg",
+        alt: "A Trichogenics patient's hair transplant before and after",
+        icon: "results",
+      },
+      {
+        title: "State-of-the-art equipment",
+        tag: "Trivellini · ASH 3",
+        body: "We use some of the latest technology in hair restoration, such as an ASH 3 microscope to separate grafts and the Trivellini extraction machine to harvest follicles, one of the best in the market.",
+        image: "/media/standout/equipment.jpg",
+        alt: "The Trivellini extraction system used at Trichogenics",
+        icon: "equipment",
       },
     ],
   },
@@ -163,9 +212,12 @@ export const homeEn: HomeContent = {
   testimonials: {
     heading: "Real patients, real results",
     items: [
-      { name: "Luke", quote: "Excellent care and attention to detail — Dr. Asi and Dr. Eric are friendly and meticulous about quality." },
-      { name: "Costa", location: "Australia", quote: "After a year of research I chose Trichogenics for how clearly they explained the whole process. Worth the long journey." },
-      { name: "Aidan", quote: "10/10, would give more if I could. Dr. Eric and the team are a credit to their profession." },
+      { name: "Luke", designation: "Verified patient", quote: "Excellent care and attention to detail. Dr. Asi and Dr. Eric are friendly and meticulous about quality.", image: "/media/results/luke.jpg" },
+      { name: "Costa", location: "Australia", designation: "Verified patient · Australia", quote: "After a year of research I chose Trichogenics for how clearly they explained the whole process. Worth the long journey.", image: "/media/results/costa.jpg" },
+      { name: "Dean", designation: "Verified patient", quote: "The team pours real pride into their work, and it shows in the result.", image: "/media/results/dean.jpg" },
+      { name: "Aidan", designation: "Verified patient", quote: "10/10, would give more if I could. Dr. Eric and the team are a credit to their profession.", image: "/media/results/aidan.jpg" },
+      { name: "Fede", designation: "Verified patient", quote: "Incredibly well organised and caring from start to finish.", image: "/media/results/fede.jpg" },
+      { name: "Peter", designation: "Verified patient", quote: "In my opinion, the best clinic in Greece.", image: "/media/results/peter.jpg" },
     ],
   },
 
@@ -173,14 +225,18 @@ export const homeEn: HomeContent = {
     heading: "Two clinics, one standard of care",
     items: [
       {
-        name: "Trichogenics — Thessaloniki",
+        name: "Trichogenics Thessaloniki",
         countryName: "Greece",
         address: "Karatasou 1, Thessaloniki",
+        video: "/media/locations/thessaloniki-coast.mp4",
+        poster: "/media/locations/thessaloniki-coast.jpg",
       },
       {
-        name: "Trichogenics — Herzlia",
+        name: "Trichogenics Herzlia",
         countryName: "Israel",
         address: "Hanadiv 71, Herzlia",
+        video: "/media/locations/herzliya-marina.mp4",
+        poster: "/media/locations/herzliya-marina.jpg",
       },
     ],
   },
@@ -196,7 +252,7 @@ export const homeEn: HomeContent = {
       {
         question: "Why have a hair transplant in Greece or Israel?",
         answer:
-          "You get American board-certified standards at a fraction of US pricing, in two destinations that are among the best in the world for hair restoration — with travel and accommodation coordinated for you.",
+          "You get American board-certified standards at a fraction of US pricing, in two destinations that are among the best in the world for hair restoration, with travel and accommodation coordinated for you.",
       },
       {
         question: "Is the procedure painful?",
@@ -211,7 +267,7 @@ export const homeEn: HomeContent = {
       {
         question: "What does it cost, and what's included?",
         answer:
-          "Pricing is transparent and all-inclusive — consultation, the procedure, medication, aftercare, and travel coordination. Your exact quote depends on the graft plan agreed at consultation.",
+          "Pricing is transparent and all-inclusive: consultation, the procedure, medication, aftercare, and travel coordination. Your exact quote depends on the graft plan agreed at consultation.",
       },
     ],
   },
