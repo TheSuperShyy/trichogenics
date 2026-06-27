@@ -73,15 +73,14 @@ const CONVEYOR_START = -2;
 
 // HAND-OFF to the doctor videos — REVEAL-FROM-BELOW, TIED TO THE CARDS. The videos are NOT trapped
 // in this pinned stage; the real <DoctorVideos> section lives in normal flow right after this track
-// and is pulled UP (negative margin, see DoctorVideos) so it RISES into the stage from below. The
-// timing is now locked to the conveyor: the giant "REAL RESULTS" headline starts defocusing + fading
+// The timing is locked to the conveyor: the giant "REAL RESULTS" headline starts defocusing + fading
 // the instant the 3rd card reaches centre and is 100% GONE by the LAST card's centre (see the
-// `centred`-driven OUT transforms below); the cards run the FULL track, so the last card EXITS the
-// trailing edge right at the end of the pin — and the videos section is pulled up by ~one viewport so
-// it starts rising AS the last card leaves (they move together). The pin then releases into the
-// videos and they simply STAY (watchable, never vanish).
-const CARDS_END = 0.95; // conveyor runs the FULL track — the last card exits the trailing edge right
-//                          at the end of the pin, so its exit coincides with the videos rising.
+// `centred`-driven OUT transforms below). After the cards fully exit, the brand MARK fades in at centre
+// and holds for the rest of the pin — a branded OUTRO that fills the trailing track instead of a blank
+// frame (this replaces the old videos-rise hand-off; the videos now follow the Mosaic in normal flow).
+const CARDS_END = 0.79; // cards finish + fully exit at 0.79; the 0.79→1.0 tail is the logo outro. Paired
+//                         with the 170dvh track base so the conveyor SPEED is UNCHANGED vs. the earlier
+//                         base-70 / CARDS_END-0.95 tuning (~same dvh per card) — only a logo tail added.
 
 function SliderStage({ items }: { items: Items }) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -168,16 +167,26 @@ function SliderStage({ items }: { items: Items }) {
   );
   const glowScale = useTransform(scrollYProgress, [0, INTRO_END * 1.4], [0.55, 1]);
 
+  // Brand-mark OUTRO. After the cards fully exit (the conveyor is done by CARDS_END = 0.79), the navy
+  // logo mark fades + scales + drifts up into the centre on the light (sand) stage and HOLDS through
+  // the rest of the pin — a branded close that fills the trailing track instead of an empty frame, and
+  // flows seamlessly into the white-start Mosaic below. Keyed to `smooth` (the same signal driving the
+  // cards) so it begins only after the conveyor is done.
+  const markOpacity = useTransform(smooth, [0.8, 0.9], [0, 1]);
+  const markScale = useTransform(smooth, [0.8, 0.93], [0.85, 1]);
+  const markY = useTransform(smooth, [0.8, 0.93], [28, 0]);
+
   return (
     <div
       ref={trackRef}
       className="relative mt-10 hidden motion-safe:lg:block"
-      // Scroll distance for: intro reveal → every card riding fully through (in AND out) → the
-      // headline hold → its DEFOCUS-out hand-off as the videos section rises from below. No video
-      // HOLD here any more (the videos now live in normal flow after this track), so the base is
-      // smaller. The per-card term (66dvh, up from 54) sets the CONVEYOR SPEED — more dvh per card =
-      // each card lingers longer crossing centre (slower, more deliberate "ethical" pass). Dynamic-
-      // viewport unit so the pinned stage + scroll length track the real viewport on every screen.
+      // Scroll distance for: intro reveal → every card riding fully through (in AND out) → headline
+      // defocus-out → the brand-MARK outro that fills the trailing track (CARDS_END=0.79 ends the
+      // conveyor at ~the same dvh as before, leaving the last ~105dvh for the logo to fade in + hold
+      // before a clean unpin into the Mosaic — no blank frame). The per-card term (66dvh) sets the
+      // CONVEYOR SPEED — more dvh per card = each card lingers longer crossing centre (slower, more
+      // deliberate "ethical" pass). Dynamic-viewport unit so the pinned stage + scroll length track
+      // the real viewport on every screen.
       style={{ height: `${(count - 1) * 66 + 170}dvh` }}
     >
       <div className="sticky top-0 flex min-h-dvh items-center justify-center overflow-hidden">
@@ -227,10 +236,23 @@ function SliderStage({ items }: { items: Items }) {
           />
         ))}
 
-        {/* NB: the doctor videos used to live HERE (crossfading into the pinned centre, then
-            scrolling away). They now sit in normal flow as the real <DoctorVideos> section right
-            after this track, pulled up so they RISE into this spot as the headline defocuses out
-            — then they STAY (watchable, never trapped). See DoctorVideos + the HAND-OFF note. */}
+        {/* Brand-mark OUTRO. Once the cards have fully exited, the navy mark fades in at centre on the
+            light (sand) stage + holds for the rest of the pin — a branded close that fills the trailing
+            track instead of a blank frame, flowing into the white-start Mosaic below. Decorative
+            (aria-hidden); the real <h2> lives in the section header. */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 flex items-center justify-center"
+          style={{ opacity: markOpacity, scale: markScale, y: markY, zIndex: 121 }}
+        >
+          <Image
+            src="/media/brand/logo-mark-clean.png"
+            alt=""
+            width={500}
+            height={554}
+            className="h-[clamp(14rem,46vmin,34rem)] w-auto"
+          />
+        </motion.div>
       </div>
     </div>
   );
@@ -311,7 +333,7 @@ function SliderCard({
           ) : (
             <Image
               src={item.image}
-              alt={`${item.name} — hair restoration before and after`}
+              alt={`${item.name}, hair restoration before and after`}
               fill
               sizes="(max-width: 1280px) 27vw, 27rem"
               className="object-cover"

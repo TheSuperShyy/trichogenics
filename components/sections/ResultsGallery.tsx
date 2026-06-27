@@ -23,10 +23,9 @@ export function ResultsGallery({
   eyebrow: string;
   heading: string;
 }) {
-  // Bottom padding is dropped on the desktop-motion path: the pinned slider track runs right to
-  // the hand-off, where the <DoctorVideos> section (pulled up beneath it via negative margin)
-  // rises into place — so the track must butt directly against it with no extra blank band. The
-  // static fallback (mobile / reduced motion) keeps full padding.
+  // Bottom padding is dropped on the desktop-motion path: the pinned slider track ends with its
+  // brand-mark outro and butts directly against the Mosaic interlude below — no extra blank band.
+  // The static fallback (mobile / reduced motion) keeps full padding.
   return (
     <section
       id="results"
@@ -40,7 +39,7 @@ export function ResultsGallery({
           </Reveal>
           <Reveal className="lg:max-w-sm">
             <p className="text-base text-ink-700">
-              Real outcomes from real Trichogenics patients — natural density designed to last.
+              Real outcomes from real Trichogenics patients, natural density designed to last.
             </p>
             <a
               href={RESULTS_HREF}

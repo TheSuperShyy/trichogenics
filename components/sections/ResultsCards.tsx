@@ -65,7 +65,7 @@ export function ResultsCards({
                 ) : (
                   <Image
                     src={item.image}
-                    alt={`${item.name} — hair restoration before and after`}
+                    alt={`${item.name}, hair restoration before and after`}
                     fill
                     sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 22vw"
                     className="object-cover"

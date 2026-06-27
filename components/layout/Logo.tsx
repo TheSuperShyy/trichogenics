@@ -20,7 +20,7 @@ export function Logo({ tone = "dark", className }: { tone?: "dark" | "light"; cl
   return (
     <Link
       href="/"
-      aria-label="Trichogenics — home"
+      aria-label="Trichogenics home"
       className={cn("relative inline-flex items-center", className)}
     >
       {/* Navy variant — for light backgrounds (default) */}

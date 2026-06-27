@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -12,7 +13,7 @@ export function Locations({
   eyebrow: string;
 }) {
   return (
-    <Section id="locations">
+    <Section id="locations" className="!pt-4">
       <Container>
         <SectionHeading eyebrow={eyebrow} title={data.heading} />
         <div className="mt-12 grid gap-6 md:grid-cols-2">
@@ -22,15 +23,50 @@ export function Locations({
               delay={i * 0.08}
               className="overflow-hidden border border-sand-200 bg-white shadow-sm"
             >
-              <div className="flex h-56 items-center justify-center bg-gradient-to-br from-sky-100 to-sky-200 text-brand-700/50">
-                <PinIcon className="h-10 w-10" />
+              <div className="relative h-56 overflow-hidden bg-gradient-to-br from-sky-100 to-sky-200">
+                {loc.video ? (
+                  <>
+                    <video
+                      className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="none"
+                      poster={loc.poster}
+                      aria-hidden
+                    >
+                      <source src={loc.video} type="video/mp4" />
+                    </video>
+                    {loc.poster ? (
+                      <Image
+                        src={loc.poster}
+                        alt=""
+                        fill
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                        className="hidden object-cover motion-reduce:block"
+                      />
+                    ) : null}
+                  </>
+                ) : loc.image ? (
+                  <Image
+                    src={loc.image}
+                    alt=""
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-brand-700/50">
+                    <PinIcon className="h-10 w-10" />
+                  </div>
+                )}
               </div>
               <div className="p-6">
                 <p className="text-eyebrow font-semibold uppercase text-accent-700">
                   {loc.countryName}
                 </p>
                 <h3 className="mt-1 text-h4 font-semibold text-brand-800">{loc.name}</h3>
-                <p className="mt-1 text-body text-ink-700">{loc.address}</p>
               </div>
             </Reveal>
           ))}

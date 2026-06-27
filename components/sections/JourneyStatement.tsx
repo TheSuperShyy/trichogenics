@@ -9,16 +9,16 @@ import { buttonVariants } from "@/components/ui/Button";
  */
 export function JourneyStatement() {
   return (
-    <section className="bg-sand-50 py-6">
-      <div className="mx-auto grid w-full max-w-[1800px] items-center gap-12 px-gutter lg:grid-cols-2 lg:items-start lg:gap-16">
-        {/* Statement + CTA */}
-        <Reveal className="max-w-xl lg:pt-12">
+    <section className="bg-sand-50 py-12 lg:min-h-[calc(100dvh-44px)]">
+      <div className="mx-auto grid w-full max-w-[1800px] items-center gap-12 px-gutter lg:min-h-[calc(100dvh-44px)] lg:grid-cols-2 lg:content-center lg:gap-16">
+        {/* Statement + CTA — vertically centred, start side */}
+        <Reveal className="max-w-xl">
           <p className="text-eyebrow font-semibold uppercase text-accent-700">The journey</p>
-          <h2 className="mt-[3.75rem] font-seed text-[clamp(1.875rem,3vw,2.5rem)] font-normal leading-[1.1] tracking-tight text-brand-800">
+          <h2 className="mt-3 font-seed text-[clamp(1.875rem,3vw,2.5rem)] font-normal leading-[1.1] tracking-tight text-brand-800">
             It&apos;s more than hair.
           </h2>
           <p className="mt-5 text-base text-ink-700">
-            A hair transplant is a journey — from your first consultation to your results a year
+            A hair transplant is a journey, from your first consultation to your results a year
             later. Our American board-certified surgeons and concierge team guide every step, so you
             can focus on the outcome.
           </p>
@@ -33,7 +33,7 @@ export function JourneyStatement() {
 
         {/* Visual */}
         <Reveal delay={0.1}>
-          <div className="relative aspect-[1/1] overflow-hidden rounded-[2rem] bg-sand-100 shadow-sm">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] bg-sand-100 shadow-sm">
             <Image
               src="/media/journey/main.jpg"
               alt="A Trichogenics surgeon designing a patient's new hairline"

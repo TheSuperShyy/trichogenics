@@ -28,7 +28,7 @@ export function FeatureCare() {
           </h2>
           <p className="mt-5 text-base text-ink-700">
             American board-certified surgeons, advanced FUE &amp; DHI technology, and a concierge
-            experience — travel, accommodation, and aftercare coordinated so you can focus on your
+            experience, with travel, accommodation, and aftercare coordinated so you can focus on your
             result.
           </p>
           <a href="#consult" className={buttonVariants({ variant: "dark", size: "lg", className: "mt-8" })}>

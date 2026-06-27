@@ -12,39 +12,37 @@ import {
 
 /**
  * "Meet the Best Hair Transplantation Doctors Overseas" — the clinic's own YouTube
- * intros as click-to-load lite-youtube facades: a compact featured welcome video with
- * two supporting clips below (deliberately small-scale proportions).
+ * intros as click-to-load lite-youtube facades: a featured welcome video large on the
+ * start side, with the two supporting clips stacked on the end side.
  *
  * This is the REAL, persistent videos section on EVERY screen (it carries the single
- * real <h2>). On desktop with motion it's pulled UP under the scroll-pinned results
- * stage (negative margin + z-10) so it RISES into view to "take REAL RESULTS' place"
- * as that giant headline defocuses out — the hand-off reveal — and then it simply STAYS
- * as normal, watchable, fully-interactive content (it is no longer trapped inside the
- * pin, so it never scrolls away / vanishes mid-reveal, which the previous in-pin version
- * did). On mobile / reduced motion the pinned slider isn't rendered, so the motion-safe:lg
- * utilities are inert and this is just a standard section after the static results grid.
+ * real <h2>). It is a plain stacked section: the Mosaic interlude now sits directly after
+ * the results slider, so the doctor videos follow the Mosaic in normal flow. (It used to
+ * be pulled up under the pinned slider to "rise into REAL RESULTS' place" as that headline
+ * defocused — that hand-off was dropped when the Mosaic took the post-slider slot.)
  * Content comes from the shared doctorVideos.data module.
  */
 export function DoctorVideos() {
   return (
-    // motion-safe:lg:-mt pulls this up under the pinned results track (~one viewport) so it starts
-    // rising into the stage from below RIGHT AS the last result card leaves centre + REAL RESULTS
-    // finishes vanishing — they move together; z-10 paints it over the (now-empty) bottom of that
-    // stage. Both are inert on mobile / reduced motion (no pinned slider there), where this is a
-    // normal stacked section. The -mt amount is the lever for WHEN the rise begins (more = earlier).
-    <section className="relative bg-sand-50 py-section motion-safe:lg:z-10 motion-safe:lg:-mt-[100dvh]">
+    <section className="relative bg-sand-50 pb-section pt-12">
       <Container>
         <Reveal className="flex flex-col items-center gap-3 text-center">
           <Eyebrow>{DOCTOR_VIDEOS_EYEBROW}</Eyebrow>
-          <h2 className="max-w-2xl text-h3 font-normal text-brand-800">{DOCTOR_VIDEOS_HEADING}</h2>
-          <p className="max-w-md text-sm text-ink-700">{DOCTOR_VIDEOS_SUBHEAD}</p>
+          <h2 className="max-w-3xl text-h2 font-normal text-brand-800">{DOCTOR_VIDEOS_HEADING}</h2>
+          <p className="max-w-xl text-base text-ink-700">{DOCTOR_VIDEOS_SUBHEAD}</p>
         </Reveal>
 
-        {/* Compact video cluster: narrower max width + tighter gaps so the whole section reads at a
-            smaller, more modest scale (minimized proportions). */}
-        <Reveal className="mx-auto mt-8 grid max-w-3xl gap-3 sm:gap-4">
-          <YouTube id={DOCTOR_VIDEOS_FEATURED.id} title={DOCTOR_VIDEOS_FEATURED.title} className="shadow-xl" />
-          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+        {/* Video cluster: featured welcome video large on the start side (spans two of three
+            columns), the two supporting clips stacked on the end side. The 2:1 width split keeps
+            the stacked pair roughly the featured's height. Collapses to one column on mobile
+            (featured, then the two clips). */}
+        <Reveal className="mx-auto mt-8 grid max-w-5xl gap-3 sm:gap-4 lg:grid-cols-3 lg:items-start">
+          {/* Featured — start side */}
+          <div className="lg:col-span-2">
+            <YouTube id={DOCTOR_VIDEOS_FEATURED.id} title={DOCTOR_VIDEOS_FEATURED.title} className="shadow-xl" />
+          </div>
+          {/* Supporting — stacked, end side */}
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-1">
             {DOCTOR_VIDEOS_SUPPORTING.map((v) => (
               <YouTube key={v.id} id={v.id} title={v.title} />
             ))}

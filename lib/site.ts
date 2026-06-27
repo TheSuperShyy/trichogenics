@@ -19,7 +19,7 @@ export const SITE = {
   locations: {
     greece: {
       id: "loc-gr",
-      name: "Trichogenics — Thessaloniki",
+      name: "Trichogenics Thessaloniki",
       street: "Karatasou 1",
       locality: "Thessaloniki",
       country: "GR",
@@ -27,7 +27,7 @@ export const SITE = {
     },
     israel: {
       id: "loc-il",
-      name: "Trichogenics — Herzlia",
+      name: "Trichogenics Herzlia",
       street: "Hanadiv 71",
       locality: "Herzlia",
       country: "IL",

@@ -27,7 +27,12 @@ const smoothstep = (a: number, b: number, x: number) => {
  */
 export function MosaicSection({ content }: { content: MosaicContent }) {
   return (
-    <section className="relative">
+    // `isolate` (isolation: isolate) contains the intro overlay's mix-blend-mode:difference WITHIN this
+    // section, so the blend composites only against the Mosaic's own canvas/background — not the page
+    // root. Without it, the blended heading bleeds through / paints over the sticky header's translucent
+    // (backdrop-blur) dropdown when it overlaps this section. The section stays below the header (z-auto
+    // < the header's z-50), so isolating here keeps the dropdown cleanly on top.
+    <section className="relative isolate">
       {/* Mobile (any), and desktop under reduced motion → calm static brand band. */}
       <div className="block motion-safe:lg:hidden">
         <MosaicStatic content={content} />

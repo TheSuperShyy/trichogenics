@@ -114,7 +114,7 @@ export function VideoShowcase() {
   const next = clips[nextIndex] ?? clips[0]!;
 
   return (
-    <section className="bg-sand-50 pt-12 pb-3">
+    <section className="bg-sand-50 pt-4 pb-3">
       <Container>
         {/* Centred header — seed-style */}
         <Reveal className="flex flex-col items-center gap-4 text-center">
@@ -123,7 +123,7 @@ export function VideoShowcase() {
             Preparation and expertise, in motion
           </h2>
           <p className="max-w-xl text-base text-ink-700">
-            A look inside the work — from hairline design and graft preparation to the precision of the
+            A look inside the work, from hairline design and graft preparation to the precision of the
             procedure itself.
           </p>
         </Reveal>

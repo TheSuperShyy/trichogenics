@@ -163,7 +163,7 @@ export function Header() {
           <div className={cn("flex w-full items-center gap-1.5 rounded-pill px-2.5 py-2 shadow-lg ring-1 backdrop-blur-2xl backdrop-saturate-150 animate-pill-unfurl", glass)}>
             <Link
               href="/"
-              aria-label="Trichogenics — home"
+              aria-label="Trichogenics home"
               className="inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-brand-800"
             >
               <Image
