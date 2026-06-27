@@ -20,9 +20,9 @@ export function Locations({
             <Reveal
               key={loc.name}
               delay={i * 0.08}
-              className="overflow-hidden rounded-lg border border-sand-200 bg-white shadow-sm"
+              className="overflow-hidden border border-sand-200 bg-white shadow-sm"
             >
-              <div className="flex h-40 items-center justify-center bg-gradient-to-br from-sky-100 to-sky-200 text-brand-700/50">
+              <div className="flex h-56 items-center justify-center bg-gradient-to-br from-sky-100 to-sky-200 text-brand-700/50">
                 <PinIcon className="h-10 w-10" />
               </div>
               <div className="p-6">

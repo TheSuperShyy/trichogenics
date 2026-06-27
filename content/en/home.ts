@@ -34,7 +34,7 @@ export const homeEn: HomeContent = {
   // "As featured in" — logos migrated from the live trichogenics.com press strip
   // (assets in public/media/press/). width/height = intrinsic ratio for next/image.
   pressLogos: [
-    { name: "New York Post", src: "/media/press/new-york-post-white.webp", width: 300, height: 46 },
+    { name: "New York Post", src: "/media/press/new-york-post.webp", width: 600, height: 92 },
     { name: "Yahoo", src: "/media/press/yahoo.webp", width: 768, height: 191 },
     { name: "Today", src: "/media/press/today.webp", width: 768, height: 576 },
     { name: "Forbes", src: "/media/press/forbes.webp", width: 450, height: 118 },
@@ -67,6 +67,23 @@ export const homeEn: HomeContent = {
     { name: "Fede", quote: "Incredibly well organised and caring.", image: "/media/results/bf-5.jpg" },
     { name: "Peter", quote: "In my opinion, the best clinic in Greece.", image: "/media/results/bf-6.jpg" },
   ],
+
+  // Decorative WebGL interlude after the doctors/YouTube section — autoplaying clinic
+  // clips scatter into a mosaic as the line zooms through. Copy is editable here; the
+  // tile geometry lives in the component. Reuses the existing transcoded clip-*.mp4.
+  mosaic: {
+    eyebrow: "A closer look",
+    heading: "Here is a deeper look into",
+    emphasis: "our work.",
+    tiles: [
+      { src: "/media/video/clip-1.mp4", alt: "Inside the Trichogenics clinic" },
+      { src: "/media/video/clip-3.mp4", alt: "Trichogenics surgeons at work" },
+      { src: "/media/video/clip-5.mp4", alt: "Hair restoration procedure detail" },
+      { src: "/media/video/clip-2.mp4", alt: "The Trichogenics clinic environment" },
+      { src: "/media/video/clip-6.mp4", alt: "Consultation and graft planning" },
+      { src: "/media/video/clip-4.mp4", alt: "Patient care at Trichogenics" },
+    ],
+  },
 
   process: [
     { step: 1, title: "Free consultation", body: "Share photos and goals online or book a video call — our surgeons review your case directly." },

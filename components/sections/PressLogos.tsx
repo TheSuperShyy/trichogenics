@@ -1,7 +1,5 @@
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/ui/Reveal";
-import { cn } from "@/lib/utils";
 import type { HomeContent } from "@/content/schema";
 
 /**
@@ -16,89 +14,64 @@ function opticalScale(width?: number, height?: number) {
   const aspect = width / height;
   const REFERENCE_ASPECT = 3.8; // a typical wordmark -> scale ~1
   const raw = Math.sqrt(REFERENCE_ASPECT / aspect);
-  // Wide range so stacked/near-square marks (TODAY, SheFinds) grow enough to
-  // match the visual weight of the wide wordmarks instead of reading as tiny.
   return Math.min(1.55, Math.max(0.85, raw));
 }
 
 /**
- * "As featured in" — credibility row migrated from the live trichogenics.com
- * press strip. Logos render as muted marks (optically uniform, see above) that
- * lift to full on hover; a missing `src` falls back to a text wordmark.
+ * "As featured in" — press credibility strip migrated from the live
+ * trichogenics.com. A seamless, continuously scrolling marquee: the logo set is
+ * rendered twice and the track is translated -50% on an infinite linear loop, so
+ * it wraps with no visible seam (and pauses on hover). Logos are muted/grayscale
+ * (optically uniform, see above) and lift to full colour on hover.
  *
- * `tone="dark"` inverts the logos to white for placement on a dark band.
- * `embedded` drops the standalone <section>/background wrapper so the row can be
- * nested inside another section (e.g. below the before/after cards).
+ * Pure CSS, so this stays a server component; the global `prefers-reduced-motion`
+ * rule in globals.css freezes the scroll for users who ask for it. The second
+ * (duplicated) copy is `aria-hidden` so screen readers announce each outlet once.
  */
 export function PressLogos({
   logos,
   label,
-  tone = "light",
-  embedded = false,
 }: {
   logos: NonNullable<HomeContent["pressLogos"]>;
   label: string;
-  tone?: "light" | "dark";
-  embedded?: boolean;
 }) {
-  const dark = tone === "dark";
+  // Render the set twice — the -50% translate then lands exactly on the seam.
+  const track = [...logos, ...logos];
 
-  const row = (
-    <Reveal className="flex flex-col items-center gap-7">
-      <p
-        className={cn(
-          "text-eyebrow font-semibold uppercase tracking-[0.18em]",
-          dark ? "text-sky-100/55" : "text-ink-700/55",
-        )}
-      >
-        {label}
-      </p>
-      <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 [--logo-h:26px] sm:gap-x-14 sm:[--logo-h:32px]">
-        {logos.map((logo) =>
-          logo.src ? (
-            <li key={logo.name} className="flex items-center">
-              <Image
-                src={logo.src}
-                alt={logo.name}
-                width={logo.width ?? 200}
-                height={logo.height ?? 50}
-                style={{
-                  height: `calc(var(--logo-h) * ${opticalScale(logo.width, logo.height).toFixed(3)})`,
-                  width: "auto",
-                }}
-                className={cn(
-                  "object-contain transition duration-300",
-                  dark
-                    ? "opacity-70 brightness-0 invert hover:opacity-100"
-                    : "opacity-60 grayscale hover:opacity-100 hover:grayscale-0",
-                )}
-              />
-            </li>
-          ) : (
-            <li
-              key={logo.name}
-              className={cn(
-                "font-display text-lg font-semibold transition-all",
-                dark
-                  ? "text-white/50 hover:text-white/80"
-                  : "text-brand-800/45 grayscale hover:text-brand-800/70",
-              )}
-            >
-              {logo.name}
-            </li>
-          ),
-        )}
-      </ul>
-    </Reveal>
-  );
-
-  // Nested inside another section (e.g. on the dark results band).
-  if (embedded) return row;
-
-  // Standalone light strip.
   return (
-    <section className="border-y border-sand-200 bg-sand-50 py-10">
-      <Container>{row}</Container>
+    <section className="overflow-hidden border-y border-sand-200 bg-white py-10">
+      <Container>
+        <p className="mb-7 text-center text-eyebrow font-semibold uppercase tracking-[0.18em] text-ink-700/55">
+          {label}
+        </p>
+      </Container>
+
+      <div className="group marquee-mask relative">
+        <ul className="animate-marquee flex w-max items-center [--gap:2.75rem] [--logo-h:26px] group-hover:[animation-play-state:paused] sm:[--gap:4rem] sm:[--logo-h:30px]">
+          {track.map((logo, i) => {
+            const dup = i >= logos.length;
+            return (
+              <li key={`${logo.name}-${i}`} aria-hidden={dup} className="flex shrink-0 items-center pe-[--gap]">
+                {logo.src ? (
+                  <Image
+                    src={logo.src}
+                    alt={dup ? "" : logo.name}
+                    width={logo.width ?? 200}
+                    height={logo.height ?? 50}
+                    style={{
+                      height: `calc(var(--logo-h) * ${opticalScale(logo.width, logo.height).toFixed(3)})`,
+                      width: "auto",
+                    }}
+                    className="object-contain opacity-60 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
+                  />
+                ) : (
+                  <span className="font-display text-lg font-semibold text-brand-800/45 grayscale">{logo.name}</span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </section>
   );
 }
