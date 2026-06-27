@@ -81,6 +81,19 @@ const LocationInfo = z.object({
 });
 const FaqItem = z.object({ question: z.string(), answer: z.string() });
 
+// Mosaic — a decorative, scroll-driven WebGL interlude: autoplaying video tiles
+// scatter from a cluster into a mosaic while a "deeper look" line zooms through.
+// Content is just the tile clip list + the intro copy; the scene's from→to tile
+// geometry is component config (not content). `emphasis` is appended to `heading`
+// in italic (e.g. heading "Here is a deeper look into" + emphasis "our work.").
+const MosaicTile = z.object({ src: z.string(), alt: z.string().optional() });
+const Mosaic = z.object({
+  eyebrow: z.string(),
+  heading: z.string(),
+  emphasis: z.string().optional(),
+  tiles: z.array(MosaicTile).min(1),
+});
+
 // HE long-form helpers
 const TocItem = z.object({ id: z.string(), label: z.string() });
 const ProseSection = z.object({
@@ -110,6 +123,7 @@ export const HomeContent = z.object({
   memberLogos: z.array(PressLogo).optional(),
   credentials: z.array(Credential).optional(),
   beforeAfter: z.array(BeforeAfter).optional(),
+  mosaic: Mosaic.optional(),
   process: z.array(ProcessStep).optional(),
   whyChoose: z.object({ heading: z.string(), features: z.array(Feature) }).optional(),
   doctors: z
@@ -134,6 +148,7 @@ export const HomeContent = z.object({
 });
 
 export type HomeContent = z.infer<typeof HomeContent>;
+export type MosaicContent = z.infer<typeof Mosaic>;
 export type FaqItem = z.infer<typeof FaqItem>;
 export type Testimonial = z.infer<typeof Testimonial>;
 export type DoctorBio = z.infer<typeof DoctorBio>;

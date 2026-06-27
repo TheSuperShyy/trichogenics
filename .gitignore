@@ -40,3 +40,6 @@ Thumbs.db
 # internal working docs — kept local, out of the public repo (business/SEO strategy)
 /context.md
 /CLAUDE.md
+
+# local lab prototypes — design/WebGL experiments, never served in production
+/public/lab/

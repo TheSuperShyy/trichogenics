@@ -8,10 +8,17 @@ import type { HomeContent } from "@/content/schema";
  * with a light scrim on the inline-start side so the dark text reads clearly.
  * The sticky transparent header floats over the top; `-mt-20` slides the image
  * up behind it. Mirrors automatically in RTL.
+ *
+ * Height uses `100dvh` (the dynamic viewport unit) minus the 44px announcement
+ * bar so the hero fills exactly one screen on mobile too — `dvh` tracks the
+ * retracting browser chrome where `vh` would overshoot. The headline block stays
+ * on the inline-start side but is vertically centred in the screen (`items-center`,
+ * with `pt-24` keeping it clear of the floating header), and the H1 scales fluidly
+ * across breakpoints via `clamp()`.
  */
 export function Hero({ hero }: { hero: HomeContent["hero"] }) {
   return (
-    <section className="relative z-10 -mt-20 min-h-[calc(100vh-44px)] overflow-hidden rounded-b-[2.5rem] bg-sand-50">
+    <section className="relative z-10 -mt-20 min-h-[calc(100dvh-44px)] overflow-hidden rounded-b-[2.5rem] bg-sand-50">
       {/* Full-bleed media */}
       <HeroMedia media={hero.media} variant="fill" />
 
@@ -23,10 +30,12 @@ export function Hero({ hero }: { hero: HomeContent["hero"] }) {
       <div className="absolute inset-0 hidden bg-gradient-to-r from-brand-50 via-brand-50/85 to-transparent rtl:bg-gradient-to-l lg:block" />
 
       {/* Padding matches the header (px-5/8/16) so the headline's start edge
-          aligns with the logo; items-start anchors the block to the top like seed. */}
-      <div className="relative mx-auto flex min-h-[calc(100vh-44px)] max-w-[1800px] items-start px-gutter pb-16 pt-24">
-        <FadeIn className="-ms-[3px] max-w-lg">
-          <h1 className="max-w-[32rem] font-seed text-[clamp(2.125rem,1.4rem+3.6vw,3rem)] font-normal leading-[1.08] tracking-tight text-brand-800">
+          aligns with the logo; items-center vertically centres the block in the
+          screen, while pt-24 keeps it clear of the floating header on short
+          viewports. */}
+      <div className="relative mx-auto flex min-h-[calc(100dvh-44px)] max-w-[1800px] items-center px-gutter pb-16 pt-24">
+        <FadeIn className="-ms-[3px] max-w-xl">
+          <h1 className="max-w-[34rem] font-seed text-[clamp(2.25rem,1.5rem+3vw,3.75rem)] font-normal leading-[1.06] tracking-tight text-brand-800">
             {hero.h1}
           </h1>
           <p className="mt-5 max-w-md font-seed text-lg text-ink-700">{hero.subhead}</p>

@@ -119,3 +119,27 @@
     opacity: 1;
   }
 }
+
+/* Press "As featured in" marquee — the logo set is rendered twice and the track
+   is translated -50% on an infinite linear loop, so it wraps with no visible
+   seam. The reduced-motion rule above freezes it (one near-instant iteration). */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+/* RTL: scroll the other way so it reads naturally right-to-left. */
+[dir="rtl"] .animate-marquee {
+  animation-direction: reverse;
+}
+/* Soft fade at both edges of the marquee viewport. */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
