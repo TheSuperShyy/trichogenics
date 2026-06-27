@@ -29,7 +29,7 @@ export function ResultsCards({
   const reduce = useReducedMotion();
 
   return (
-    <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="mt-12 grid gap-5 sm:grid-cols-2">
       {items.map((item, i) => {
         const isActive = active === i;
         return (
@@ -50,7 +50,7 @@ export function ResultsCards({
                   : "shadow-[0_12px_30px_-16px_rgba(7,19,49,0.35)]",
               )}
             >
-              <div className="relative aspect-[2/3] w-full">
+              <div className="relative aspect-[5/3] w-full">
                 {item.video ? (
                   <video
                     aria-hidden
@@ -67,7 +67,7 @@ export function ResultsCards({
                     src={item.image}
                     alt={`${item.name}, hair restoration before and after`}
                     fill
-                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 22vw"
+                    sizes="(max-width: 640px) 92vw, 46vw"
                     className="object-cover"
                   />
                 )}

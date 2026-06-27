@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useInView, useReducedMotion } from "motion/react";
 
 /**
@@ -14,15 +14,25 @@ export function CountUp({ value, duration = 1.4 }: { value: string; duration?: n
   const reduce = useReducedMotion();
   const [display, setDisplay] = useState(value);
 
-  const match = value.match(/([^\d.,]*)([\d.,]+)(.*)/);
-  const prefix = match?.[1] ?? "";
-  const numeric = match?.[2] ?? "";
-  const suffix = match?.[3] ?? "";
-  const target = parseFloat(numeric.replace(/,/g, ""));
-  const decimals = numeric.includes(".") ? (numeric.split(".")[1]?.length ?? 0) : 0;
+  // Parse once per `value`. Deriving these inline produced a fresh `match` array
+  // on every render; listed as an effect dep, that restarted the rAF loop on each
+  // counted frame, leaving the number stuck near 0. Memoising keeps the deps
+  // stable so the count runs to completion.
+  const { prefix, suffix, target, decimals, valid } = useMemo(() => {
+    const m = value.match(/([^\d.,]*)([\d.,]+)(.*)/);
+    const numeric = m?.[2] ?? "";
+    const t = parseFloat(numeric.replace(/,/g, ""));
+    return {
+      prefix: m?.[1] ?? "",
+      suffix: m?.[3] ?? "",
+      target: t,
+      decimals: numeric.includes(".") ? (numeric.split(".")[1]?.length ?? 0) : 0,
+      valid: Boolean(m) && !Number.isNaN(t),
+    };
+  }, [value]);
 
   useEffect(() => {
-    if (!inView || !match || Number.isNaN(target)) {
+    if (!inView || !valid) {
       return;
     }
     if (reduce) {
@@ -45,7 +55,7 @@ export function CountUp({ value, duration = 1.4 }: { value: string; duration?: n
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [inView, reduce, target, decimals, duration, prefix, suffix, value, match]);
+  }, [inView, reduce, valid, target, decimals, duration, prefix, suffix, value]);
 
   return (
     <span ref={ref}>
