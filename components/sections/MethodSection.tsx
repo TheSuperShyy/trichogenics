@@ -1,5 +1,8 @@
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
+import { BlurReveal } from "@/components/ui/BlurReveal";
+import { CountUp } from "@/components/ui/CountUp";
+import LogoSpinnerMount from "@/components/media/LogoSpinnerMount";
 
 /**
  * "The Trichogenics method" — seed.com ViaCap-style technology explainer: a large
@@ -22,17 +25,36 @@ export function MethodSection() {
           className="overflow-hidden rounded-[2.5rem] bg-white/40 shadow-lg ring-1 ring-white/50 backdrop-blur-2xl"
         >
           <div className="grid gap-12 p-8 sm:p-12 lg:grid-cols-2 lg:gap-10 lg:p-16">
-            {/* Start: eyebrow + heading + stat */}
+            {/* Start: eyebrow + heading + stat. Each line whispers up out of a
+                soft blur, lightly staggered; the stat counts up on reveal. */}
             <div className="flex flex-col">
-              <p className="flex items-center gap-2 text-eyebrow font-semibold uppercase text-accent-700">
+              <BlurReveal
+                as="p"
+                x={-64}
+                duration={1.9}
+                delay={0}
+                className="flex items-center gap-2 text-eyebrow font-semibold uppercase text-accent-700"
+              >
                 <span className="h-2 w-2 rounded-pill bg-accent-500" />
                 The Trichogenics method
-              </p>
-              <h2 className="mt-5 max-w-md font-seed text-h2 font-normal text-brand-800">
+              </BlurReveal>
+              <BlurReveal
+                as="h2"
+                x={-64}
+                duration={1.9}
+                delay={0.14}
+                className="mt-5 max-w-md font-seed text-h2 font-normal text-brand-800"
+              >
                 Most hair transplants stress the grafts. Ours protects every follicle.
-              </h2>
+              </BlurReveal>
 
-              <div className="mt-8 flex max-w-md items-center justify-between gap-4 rounded-lg border border-brand-900/10 bg-white/60 p-5">
+              <BlurReveal
+                as="div"
+                x={-64}
+                duration={1.9}
+                delay={0.28}
+                className="mt-8 flex max-w-md items-center justify-between gap-4 rounded-lg border border-brand-900/10 bg-white/60 p-5"
+              >
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                   <span className="rounded-pill border border-brand-900/15 px-2.5 py-0.5 text-xs font-semibold text-brand-800">
                     FUE &amp; DHI
@@ -43,41 +65,54 @@ export function MethodSection() {
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-pill bg-accent-500 text-white">
                     <ArrowUpIcon className="h-4 w-4" />
                   </span>
-                  <span className="font-seed text-3xl font-semibold text-brand-800">95%+</span>
+                  <span className="font-seed text-3xl font-semibold tabular-nums text-brand-800">
+                    <CountUp value="95%+" duration={2.2} />
+                  </span>
                 </div>
-              </div>
-              <p className="mt-4 text-sm text-ink-700/60">°With board-certified graft placement.</p>
+              </BlurReveal>
+              <BlurReveal as="p" x={-64} duration={1.9} delay={0.42} className="mt-4 text-sm text-ink-700/60">
+                °With board-certified graft placement.
+              </BlurReveal>
             </div>
 
             {/* End: visual + annotated callouts */}
             <div>
               <div className="grid items-center gap-6 lg:grid-cols-[1fr_auto_1fr]">
                 {/* Outer callout */}
-                <div className="lg:self-start lg:text-end">
+                <BlurReveal as="div" x={64} duration={1.9} delay={0.2} className="lg:self-start lg:text-end">
                   <p className="text-xs font-semibold uppercase tracking-wide text-brand-800">Extraction</p>
                   <p className="mt-1 text-sm text-ink-700">
                     Follicular units are harvested individually with the Trivellini system, minimising damage.
                   </p>
                   <span className="mt-2 hidden h-px w-16 border-t border-dashed border-brand-900/30 lg:ms-auto lg:block" />
-                </div>
+                </BlurReveal>
 
-                {/* Central visual (placeholder for a 3D/AI graft render) */}
-                <div className="relative mx-auto flex h-[320px] w-[150px] items-center justify-center sm:h-[380px] sm:w-[180px]">
-                  <div className="absolute -inset-8 rounded-pill bg-accent-300/20 blur-2xl" />
-                  <div className="relative h-full w-full overflow-hidden rounded-pill bg-gradient-to-b from-brand-700 to-accent-600 shadow-lg">
-                    <div className="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 bg-sand-50/70" />
-                    <div className="absolute left-1/2 top-[18%] h-2.5 w-2.5 -translate-x-1/2 rounded-pill bg-white/80" />
+                {/* Central visual: the real-time 3D, drag-to-spin Trichogenics
+                    mark (navy circle + centre strand, teal side strands).
+                    Client-only (three.js, ssr:false) so it never touches the
+                    SEO-critical server HTML. */}
+                <div className="relative mx-auto flex h-[360px] w-[290px] items-center justify-center sm:h-[430px] sm:w-[350px] lg:h-[500px] lg:w-[400px]">
+                  <div className="absolute -inset-6 rounded-full bg-accent-300/20 blur-3xl" />
+                  <div
+                    role="img"
+                    aria-label="Interactive 3D Trichogenics emblem. Drag to spin it."
+                    className="relative h-full w-full cursor-grab active:cursor-grabbing"
+                  >
+                    <LogoSpinnerMount />
                   </div>
+                  <span className="pointer-events-none absolute inset-x-0 bottom-0 text-center text-[0.7rem] font-medium uppercase tracking-wide text-ink-700/45">
+                    Drag to spin
+                  </span>
                 </div>
 
                 {/* Inner callout */}
-                <div className="lg:self-end">
+                <BlurReveal as="div" x={64} duration={1.9} delay={0.42} className="lg:self-end">
                   <p className="text-xs font-semibold uppercase tracking-wide text-brand-800">Placement</p>
                   <p className="mt-1 text-sm text-ink-700">
                     Each graft is placed by the surgeons at the right angle and density for a natural hairline.
                   </p>
                   <span className="mt-2 hidden h-px w-16 border-t border-dashed border-brand-900/30 lg:block" />
-                </div>
+                </BlurReveal>
               </div>
             </div>
           </div>

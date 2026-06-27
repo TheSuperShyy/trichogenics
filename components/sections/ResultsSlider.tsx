@@ -51,7 +51,8 @@ export function ResultsBody({ items }: { items: Items }) {
 // (not a flat linear tilt) matching the reference's measured `rotate` values —
 // upright at centre, then ramping ~0° → ±17.7° → ±27.6° → ±30° toward the edges,
 // so the left/right cards lean decisively like the reference instead of flat.
-const PITCH = 46; // vw between adjacent card centres (wider gap → more space around the centre card,
+const PITCH = 56; // vw between adjacent card centres (widened from 46 for the wider landscape cards;
+//                   wider gap → more space around the centre card,
 //                   neighbours pushed further to the edges). Spacing only — does NOT change conveyor
 //                   speed (that's `centred`'s index mapping); raise for more breathing room.
 const MAX_TILT = 30; // ±30° cap (the reference clamps at rotate(30deg))
@@ -307,7 +308,7 @@ function SliderCard({
     <motion.article
       style={{ left: "50%", top: "50%", x, y, rotate, scale, opacity, zIndex, visibility, pointerEvents }}
       transformTemplate={(_latest, generated) => `translate(-50%, -50%) ${generated}`}
-      className="absolute w-[clamp(17rem,27vw,27rem)]"
+      className="absolute w-[clamp(24rem,42vw,46rem)]"
     >
       {/* Borderless card (ethical-style): the before/after media fills the card
           edge-to-edge; the label chip + testimonial overlay sit on a bottom
@@ -318,7 +319,7 @@ function SliderCard({
         aria-label={`View ${item.name}'s result`}
         className="group block overflow-hidden bg-brand-900 shadow-[0_28px_70px_-24px_rgba(7,19,49,0.5)] outline-none transition-shadow focus-visible:ring-4 focus-visible:ring-accent-500/70"
       >
-        <div className="relative aspect-[2/3]">
+        <div className="relative aspect-[5/3]">
           {item.video ? (
             <video
               aria-hidden
@@ -335,7 +336,7 @@ function SliderCard({
               src={item.image}
               alt={`${item.name}, hair restoration before and after`}
               fill
-              sizes="(max-width: 1280px) 27vw, 27rem"
+              sizes="(max-width: 1280px) 42vw, 46rem"
               className="object-cover"
             />
           )}
