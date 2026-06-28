@@ -154,7 +154,7 @@ export const homeEn: HomeContent = {
         title: "Patient care",
         tag: "Concierge experience",
         body: "We focus on your comfort and happiness from start to finish. Every step, from consultation to post-operative care, is designed with you in mind. Our surgeons personally oversee your recovery through in-person and virtual visits, so you are looked after at every stage. Experience a luxury getaway in Greece with the added benefit of restored hair.",
-        image: "/media/journey/main.jpg",
+        image: "/media/standout/patient-care.jpg",
         alt: "A Trichogenics surgeon planning a patient's hairline",
         icon: "care",
       },
@@ -162,7 +162,7 @@ export const homeEn: HomeContent = {
         title: "Great results",
         tag: "Proven outcomes",
         body: "Hundreds of happy patients say we helped them get affordable hair transplants that look amazing. Their transformations are a testament to our commitment to excellence.",
-        image: "/media/results/bf1.jpg",
+        image: "/media/standout/great-results.jpg",
         alt: "A Trichogenics patient's hair transplant before and after",
         icon: "results",
       },
@@ -178,11 +178,27 @@ export const homeEn: HomeContent = {
   },
 
   technology: {
-    heading: "Technology built for natural results",
+    heading:
+      "Why a follicular unit restoration clinic abroad delivers advanced technology and results",
     items: [
-      { title: "Trivellini Mamba", body: "A leading extraction system that adapts to each follicle, reducing transection and protecting grafts." },
-      { title: "ASH Omni 3 microscope", body: "High-magnification graft preparation for clean, viable follicular units." },
-      { title: "Surgical AI method", body: "Data-guided planning that supports density and a balanced, age-appropriate hairline." },
+      {
+        title: "Trivellini Mamba",
+        body: "A leading extraction system that adapts to each follicle in real time, reducing transection and protecting grafts for higher survival and density.",
+        image: "/media/standout/equipment.jpg",
+        alt: "The Trivellini Mamba extraction system used at Trichogenics",
+      },
+      {
+        title: "ASH Omni 3 Microscope",
+        body: "Advanced magnification technology used to inspect and refine grafts, guaranteeing only the healthiest follicles are transplanted.",
+        image: "/media/technology/omni-device.jpg",
+        alt: "The ASH Omni 3 microscope used at Trichogenics for graft preparation",
+      },
+      {
+        title: "Surgical AI method",
+        body: "Data-guided planning that supports density and a balanced, age-appropriate hairline designed around your face.",
+        image: "/media/technology/surgical-ai.jpg",
+        alt: "AI-assisted follicular unit detection mapping grafts across the donor area",
+      },
     ],
   },
 

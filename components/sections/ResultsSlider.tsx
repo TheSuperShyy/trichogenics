@@ -38,7 +38,7 @@ export function ResultsBody({ items }: { items: Items }) {
       {/* Static grid — mobile (any), and desktop only under reduced motion. Padded
           here since ResultsBody is now a full-width child of the section. */}
       <div className="mx-auto block w-full max-w-[1800px] px-gutter motion-safe:lg:hidden">
-        <ResultsCards items={items.slice(0, 4)} />
+        <ResultsCards items={items.slice(0, 6)} />
       </div>
       {/* Slider — desktop + motion-allowed only; full-bleed (full viewport width). */}
       <SliderStage items={items.slice(0, 6)} />

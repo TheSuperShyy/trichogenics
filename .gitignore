@@ -31,6 +31,18 @@ Thumbs.db
 # MASTER media — large source files. Transcode into public/media/ instead.
 /collections/
 
+# raw image/video drop-offs in the repo ROOT (leading slash = root only, so
+# public/media/* committed assets are unaffected). Transcode these into
+# public/media/ and keep the master in /collections/, then they can be removed.
+/*.png
+/*.jpg
+/*.jpeg
+/*.webp
+/*.avif
+/*.gif
+/*.mp4
+/*.mov
+
 # raw scraped source (reference only; not part of the app build)
 /scraped
 /scraped-1
