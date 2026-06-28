@@ -13,15 +13,18 @@ import { TechnologyCarousel } from "@/components/sections/TechnologyCarousel";
 import { Doctors } from "@/components/sections/Doctors";
 import { StandoutCarousel } from "@/components/sections/StandoutCarousel";
 import { Locations } from "@/components/sections/Locations";
+import { Faq } from "@/components/sections/Faq";
+import { BlogTeaser } from "@/components/sections/BlogTeaser";
 import type { HomeContent } from "@/content/schema";
 
 /**
  * English homepage composition — brand/clinic story, conversion-first.
  *
- * NOTE: StatsBand, Included, AiAnalysis (HairGen), Testimonials, Faq and
- * ConsultCta are temporarily removed ("for now"). Their components + content
- * remain — re-add the import + render line to restore. (Technology is now back,
- * rendered as a carousel between the members strip and the surgeons.)
+ * NOTE: StatsBand, Included, AiAnalysis (HairGen), Testimonials and ConsultCta
+ * are temporarily removed ("for now"). Their components + content remain — re-add
+ * the import + render line to restore. (Technology is back as a carousel between
+ * the members strip and the surgeons; Faq is back as a card accordion above the
+ * blog teaser.)
  */
 export function HomeEn({ content }: { content: HomeContent }) {
   return (
@@ -58,6 +61,19 @@ export function HomeEn({ content }: { content: HomeContent }) {
           earlier auto-advancing list `Standout` is kept in the repo for reuse.) */}
       {content.standout ? <StandoutCarousel data={content.standout} /> : null}
       {content.locations ? <Locations data={content.locations} eyebrow="Our clinics" /> : null}
+      {/* Blog teaser — latest posts deep-linking to /post/<slug>/ (internal-link SEO),
+          below the locations. */}
+      {content.blog ? <BlogTeaser data={content.blog} /> : null}
+      {/* FAQ — card accordion (feeds FAQPage JSON-LD); target of the #faq nav anchor.
+          Last section before the footer. intro + CTA are EN-only props so no English
+          reaches the shared HE landing. */}
+      {content.faq ? (
+        <Faq
+          data={content.faq}
+          intro="Honest answers on choosing Greece, graft counts, and what a hair transplant actually costs."
+          cta={{ note: "Still have a question?", label: "Book a free consultation", href: "#consult" }}
+        />
+      ) : null}
     </main>
   );
 }

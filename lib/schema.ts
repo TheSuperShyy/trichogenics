@@ -130,13 +130,25 @@ function breadcrumb(url: string) {
   };
 }
 
+// Flatten a FAQ answer (intro + any price-tier rows + closing paragraph) into the
+// single plain-text string the FAQPage Answer node expects, so the rich on-page
+// cost answers are reproduced in full for search engines.
+function faqAnswerText(q: FaqItem): string {
+  const parts = [q.answer];
+  if (q.priceList?.length) {
+    parts.push(q.priceList.map((p) => `${p.grafts}: ${p.price}`).join("; "));
+  }
+  if (q.answerCont) parts.push(q.answerCont);
+  return parts.join(" ");
+}
+
 function faqPage(items: FaqItem[]) {
   return {
     "@type": "FAQPage",
     mainEntity: items.map((q) => ({
       "@type": "Question",
       name: q.question,
-      acceptedAnswer: { "@type": "Answer", text: q.answer },
+      acceptedAnswer: { "@type": "Answer", text: faqAnswerText(q) },
     })),
   };
 }
