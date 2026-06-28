@@ -144,8 +144,8 @@ export function Header() {
   const surface = !scrolled
     ? ""
     : onDark
-      ? "bg-brand-900/50 shadow-lg ring-1 ring-white/15 backdrop-blur-md"
-      : "bg-white/80 shadow-sm ring-1 ring-brand-900/5 backdrop-blur-md";
+      ? "bg-brand-900/90 shadow-lg ring-1 ring-white/15 backdrop-blur-xl backdrop-saturate-150"
+      : "bg-white/95 shadow-sm ring-1 ring-brand-900/5 backdrop-blur-xl backdrop-saturate-150";
   const linkText = onDark ? "text-white/90" : "text-brand-800";
   const linkHover = onDark ? "hover:text-white" : "hover:text-accent-700";
 
@@ -375,10 +375,13 @@ function DropdownNav({
   const panelId = `nav-${item.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
   // The frosted panel adapts to the theme so it stays legible when opened while
-  // the header is over a dark section.
-  const glass = onDark ? "bg-brand-900/80 ring-white/15" : "bg-slate-400/40 ring-white/40";
+  // the header is over a dark section. High surface opacity (+ backdrop blur) keeps
+  // it frosted but NOT see-through: a near-white panel on light sections, deep navy
+  // on dark ones. Desktop dropdowns only — the mobile menu keeps its own glass.
+  const glass = onDark ? "bg-brand-900/[0.98] ring-white/20" : "bg-white/[0.98] ring-brand-900/10";
   const glassText = onDark ? "text-white" : "text-brand-900";
-  const glassBorder = onDark ? "border-white/15" : "border-white/40";
+  const glassBorder = onDark ? "border-white/15" : "border-brand-900/10";
+  const itemHover = onDark ? "hover:bg-white/10" : "hover:bg-brand-900/5";
   const footerHover = onDark ? "hover:text-sky-300" : "hover:text-accent-700";
 
   const cancelClose = () => {
@@ -442,7 +445,7 @@ function DropdownNav({
       <div
         id={panelId}
         className={cn(
-          "absolute start-0 top-full z-50 mt-3 w-[19rem] max-w-[calc(100vw-2rem)] origin-top overflow-hidden rounded-[1.75rem] p-2 shadow-[0_28px_70px_-18px_rgba(7,19,49,0.5)] ring-1 backdrop-blur-2xl backdrop-saturate-150 transition-[opacity,transform] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "absolute start-0 top-full z-50 mt-3 w-[19rem] max-w-[calc(100vw-2rem)] origin-top overflow-hidden rounded-[1.75rem] p-2 shadow-[0_28px_70px_-18px_rgba(7,19,49,0.5)] ring-1 backdrop-blur-3xl backdrop-saturate-150 transition-[opacity,transform] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
           glass,
           open ? "visible translate-y-0 scale-100 opacity-100" : "invisible -translate-y-1 scale-95 opacity-0",
         )}
@@ -463,7 +466,10 @@ function DropdownNav({
                   cancelClose();
                   onClose();
                 }}
-                className="group flex items-center gap-3.5 rounded-2xl p-2 transition-colors duration-200 hover:bg-white/35"
+                className={cn(
+                  "group flex items-center gap-3.5 rounded-2xl p-2 transition-colors duration-200",
+                  itemHover,
+                )}
               >
                 {c.thumb ? (
                   <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl bg-white/30 ring-1 ring-white/30">

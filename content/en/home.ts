@@ -258,33 +258,93 @@ export const homeEn: HomeContent = {
   },
 
   faq: {
-    heading: "Hair transplant FAQs",
+    heading: "Hair Transplant in Thessaloniki, Greece and Israel: FAQs",
     items: [
       {
-        question: "Are your surgeons really board-certified?",
+        question: "Is Greece good for hair transplants?",
         answer:
-          "Yes. Our founders are Diplomates of the American Board of Hair Restoration Surgery (ABHRS) and members of the ISHRS and World FUE Institute. Your procedure is performed by the surgeons themselves.",
+          "Yes, Greece is highly regarded for hair transplants due to its combination of skilled surgeons, modern hair clinics, and competitive pricing. The focus on advanced techniques ensures high success rates and natural-looking results. Many patients choose Greece for its reputation for professionalism and quality in the field of hair restoration.",
       },
       {
-        question: "Why have a hair transplant in Greece or Israel?",
+        question: "What's the best country to get a hair transplant?",
         answer:
-          "You get American board-certified standards at a fraction of US pricing, in two destinations that are among the best in the world for hair restoration, with travel and accommodation coordinated for you.",
+          "Greece is a top choice for hair transplants. This is due to its modern clinics and skilled professionals. Clinics like Trichogenics focus on carefully handling hair follicles during extraction and implantation. This helps maximize survival rates and achieve great results.",
       },
       {
-        question: "Is the procedure painful?",
-        answer:
-          "The procedure is performed under local anaesthetic and most patients describe it as comfortable. You'll receive detailed aftercare and direct access to your team during recovery.",
+        question: "How much do 3,000 hair grafts cost?",
+        answer: "In Greece, the cost of 3,000 hair grafts typically ranges from €5,000 to €7,000.",
       },
       {
-        question: "How long until I see results?",
+        question: "How much is 4,000 grafts?",
         answer:
-          "New growth typically begins around 3–4 months, with most density and a maturing, natural hairline visible by 12 months.",
+          "A 4,000-graft hair transplant in Greece costs around €6,000 to €8,000, depending on the clinic and procedure complexity. Clinics specializing in advanced methods ensure the donor area is treated carefully to preserve its appearance while maintaining high success rates for the transplant.",
       },
       {
-        question: "What does it cost, and what's included?",
+        question: "How much is 5,000 grafts?",
         answer:
-          "Pricing is transparent and all-inclusive: consultation, the procedure, medication, aftercare, and travel coordination. Your exact quote depends on the graft plan agreed at consultation.",
+          "For 5,000 grafts, you can expect to pay between €7,000 and €10,000 in Greece. At Trichogenics we focus on precision and care to ensure the highest survival rate for transplanted hair follicles, resulting in excellent value and patient satisfaction. However, we don't recommend transplanting such a high number of grafts in a single session. A skilled surgeon should achieve optimal density and coverage with fewer grafts, ensuring a safer procedure and better overall outcome.",
+      },
+      {
+        question: "What is the cost of a hair transplant in Greece?",
+        answer:
+          "The best hair transplant in Greece cost depends on the number of grafts and the techniques used:",
+        priceList: [
+          { grafts: "1,500 grafts", price: "€3,000 – €5,500" },
+          { grafts: "3,000 grafts", price: "€5,000 – €7,000" },
+          { grafts: "5,000 grafts", price: "€7,000 – €10,000" },
+        ],
+        answerCont:
+          "With competitive pricing and advanced care, Greece is a leading destination for hair restoration. Clinics aim to create a natural-looking result. They also work to keep the donor area healthy. Their goal is to maximize the survival rate of transplanted hair follicles.",
+      },
+      {
+        question: "What do 2,000 grafts look like?",
+        answer:
+          "A 2,000-graft hair transplant typically provides moderate coverage for areas experiencing thinning or baldness. The appearance and effectiveness depend on factors such as the patient's hair characteristics (e.g., thickness, color, and texture) and the size of the treatment area.",
       },
     ],
+  },
+
+  blog: {
+    eyebrow: "From the blog",
+    heading: "Explore Hair Restoration Tips & Insights",
+    posts: [
+      {
+        title: "Facial Hair Transplant Surgery: Procedure Overview",
+        href: "/post/facial-hair-transplant-surgery/",
+        category: "Hair Transplant",
+        categoryHref: "/post/category/hair-transplant/",
+        author: "Asi Peretz",
+        date: "March 23, 2026",
+        excerpt:
+          "Facial hair transplant surgery can improve beard density and fix patchy areas. See how it works, the benefits, and the long-term results.",
+        image: "/media/journey/main.jpg",
+        alt: "A Trichogenics surgeon marking a patient's hairline before surgery",
+      },
+      {
+        title: "Where Does the Hair Come From for Hair Transplants?",
+        href: "/post/where-does-the-hair-come-from-for-hair-transplants/",
+        category: "Hair Transplant",
+        categoryHref: "/post/category/hair-transplant/",
+        author: "Asi Peretz",
+        date: "March 22, 2026",
+        excerpt:
+          "Hair used in a transplant comes from your own permanent donor area. Here is how the donor zone is chosen and why the results last.",
+        image: "/media/video/clip-1.jpg",
+        alt: "A Trichogenics surgeon outlining the donor area at the back of the scalp",
+      },
+      {
+        title: "Hair Transplant Expenses: How Much Is a Hair Transplant",
+        href: "/post/hair-transplant-expenses/",
+        category: "Hair Transplant",
+        categoryHref: "/post/category/hair-transplant/",
+        author: "Asi Peretz",
+        date: "March 14, 2026",
+        excerpt:
+          "Wondering about hair transplant expenses? See average costs, what affects pricing, and how to plan based on your hair loss and goals.",
+        image: "/media/feature/main.jpg",
+        alt: "Trichogenics board-certified surgeons performing a procedure",
+      },
+    ],
+    cta: { label: "Read more on the blog", href: "/trichogenics-hair-blog/" },
   },
 };

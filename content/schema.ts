@@ -107,7 +107,35 @@ const LocationInfo = z.object({
   video: z.string().optional(), // looping cinemagraph; `poster` is its still/LCP
   poster: z.string().optional(), // poster for the video + reduced-motion fallback
 });
-const FaqItem = z.object({ question: z.string(), answer: z.string() });
+const FaqItem = z.object({
+  question: z.string(),
+  answer: z.string(),
+  // Optional price-tier rows (graft count -> price range) rendered as a small
+  // definition list, plus a closing paragraph — for the longer cost answers.
+  // Both also fold into the FAQPage JSON-LD answer text (lib/schema.ts).
+  priceList: z.array(z.object({ grafts: z.string(), price: z.string() })).optional(),
+  answerCont: z.string().optional(),
+});
+
+// Blog teaser — "latest posts" cards linking to the legacy /post/<slug>/ URLs
+// (internal-link SEO). `date` is a display string (e.g. "March 23, 2026").
+const BlogPost = z.object({
+  title: z.string(),
+  href: z.string(),
+  category: z.string().optional(),
+  categoryHref: z.string().optional(),
+  author: z.string().optional(),
+  date: z.string().optional(),
+  excerpt: z.string().optional(),
+  image: z.string().optional(),
+  alt: z.string().optional(),
+});
+const Blog = z.object({
+  eyebrow: z.string().optional(),
+  heading: z.string(),
+  posts: z.array(BlogPost).min(1),
+  cta: Cta.optional(),
+});
 
 // Mosaic — a decorative, scroll-driven WebGL interlude: autoplaying video tiles
 // scatter from a cluster into a mosaic while a "deeper look" line zooms through.
@@ -174,6 +202,7 @@ export const HomeContent = z.object({
 
   // shared
   faq: z.object({ heading: z.string(), items: z.array(FaqItem) }).optional(),
+  blog: Blog.optional(),
 });
 
 export type HomeContent = z.infer<typeof HomeContent>;
