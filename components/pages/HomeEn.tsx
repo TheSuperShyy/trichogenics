@@ -9,6 +9,7 @@ import { JourneyStatement } from "@/components/sections/JourneyStatement";
 import { VideoShowcase } from "@/components/sections/VideoShowcase";
 import { AiAnalysisPromo } from "@/components/sections/AiAnalysisPromo";
 import { MemberLogos } from "@/components/sections/MemberLogos";
+import { TechnologyCarousel } from "@/components/sections/TechnologyCarousel";
 import { Doctors } from "@/components/sections/Doctors";
 import { StandoutCarousel } from "@/components/sections/StandoutCarousel";
 import { Locations } from "@/components/sections/Locations";
@@ -17,9 +18,10 @@ import type { HomeContent } from "@/content/schema";
 /**
  * English homepage composition — brand/clinic story, conversion-first.
  *
- * NOTE: Technology, StatsBand, Included, AiAnalysis (HairGen), Testimonials,
- * Faq and ConsultCta are temporarily removed ("for now"). Their
- * components + content remain — re-add the import + render line to restore.
+ * NOTE: StatsBand, Included, AiAnalysis (HairGen), Testimonials, Faq and
+ * ConsultCta are temporarily removed ("for now"). Their components + content
+ * remain — re-add the import + render line to restore. (Technology is now back,
+ * rendered as a carousel between the members strip and the surgeons.)
  */
 export function HomeEn({ content }: { content: HomeContent }) {
   return (
@@ -44,6 +46,11 @@ export function HomeEn({ content }: { content: HomeContent }) {
       <AiAnalysisPromo />
       {content.memberLogos ? (
         <MemberLogos logos={content.memberLogos} label="Proud members of:" />
+      ) : null}
+      {/* Technology carousel — single-slide deck (Trivellini / ASH Omni 3 / Surgical AI),
+          sits above "Meet the surgeons" and below the "Proud members of" strip. */}
+      {content.technology ? (
+        <TechnologyCarousel data={content.technology} eyebrow="Advanced technology" />
       ) : null}
       {content.doctors ? <Doctors data={content.doctors} eyebrow="Your surgeons" /> : null}
       {/* "What makes us stand out" — differentiators in the circular-carousel

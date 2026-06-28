@@ -59,7 +59,12 @@ const DoctorBio = z.object({
   photo: z.string().optional(),
   videoId: z.string().optional(), // YouTube id
 });
-const TechItem = z.object({ title: z.string(), body: z.string(), image: z.string().optional() });
+const TechItem = z.object({
+  title: z.string(),
+  body: z.string(),
+  image: z.string().optional(),
+  alt: z.string().optional(),
+});
 // Standout — the "what makes us different" feature list: an auto-advancing,
 // click/keyboard-selectable set of differentiators, each paired with an image
 // shown alongside the active item. `icon` is a key into the section's inline
